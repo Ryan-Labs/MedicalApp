@@ -6,11 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -50,9 +51,9 @@ class User
     private $isEnabled;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $state;
+    private $roles = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=Profession::class)
@@ -79,6 +80,7 @@ class User
         $this->ads = new ArrayCollection();
         $this->responses = new ArrayCollection();
         $this->paiements = new ArrayCollection();
+        $this->roles = array('ROLE_USER');
     }
 
     public function getId(): ?int
@@ -158,14 +160,16 @@ class User
         return $this;
     }
 
-    public function getState(): ?string
+    public function getRoles(): array
     {
-        return $this->state;
+        $roles = $this->roles;
+
+        return array_unique($roles);
     }
 
-    public function setState(string $state): self
+    public function setRoles(array $roles): self
     {
-        $this->state = $state;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -274,4 +278,24 @@ class User
 
         return $this;
     }
+
+    /**
+     * UserInterface methods
+     */
+    public function getUsername()
+    {
+        return $this->getMail();
+    }
+
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
 }
