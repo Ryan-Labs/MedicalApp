@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {% if error %}
+        <div>{{ error }}</div>
+    {% endif %}
+    {{ form_row(form.newPassword.first) }}
+    {{ form_row(form.newPassword.second) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}
