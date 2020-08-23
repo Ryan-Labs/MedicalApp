@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.phoneNumber) }}
+    {{ form_row(form.profession) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}
