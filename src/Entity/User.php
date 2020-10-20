@@ -75,12 +75,28 @@ class User implements UserInterface
      */
     private $paiements;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $resetToken;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mail::class, mappedBy="user")
+     */
+    private $mails;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $tokenEndTime;
+
     public function __construct()
     {
         $this->ads = new ArrayCollection();
         $this->responses = new ArrayCollection();
         $this->paiements = new ArrayCollection();
         $this->roles = array('ROLE_USER');
+        $this->mails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -296,6 +312,61 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mail[]
+     */
+    public function getMails(): Collection
+    {
+        return $this->mails;
+    }
+
+    public function addMail(Mail $mail): self
+    {
+        if (!$this->mails->contains($mail)) {
+            $this->mails[] = $mail;
+            $mail->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMail(Mail $mail): self
+    {
+        if ($this->mails->contains($mail)) {
+            $this->mails->removeElement($mail);
+            // set the owning side to null (unless already changed)
+            if ($mail->getUser() === $this) {
+                $mail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTokenEndTime(): ?\DateTimeInterface
+    {
+        return $this->tokenEndTime;
+    }
+
+    public function setTokenEndTime(?\DateTimeInterface $tokenEndTime): self
+    {
+        $this->tokenEndTime = $tokenEndTime;
+
+        return $this;
     }
 
 }
