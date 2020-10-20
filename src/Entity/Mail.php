@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\MailRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=MailRepository::class)
@@ -19,7 +22,7 @@ class Mail
 
     /**
      * @ORM\OneToOne(targetEntity=Response::class, inversedBy="mail", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $response;
 
@@ -52,6 +55,36 @@ class Mail
      * @ORM\Column(type="datetime")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subject;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="mails")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+    public function __construct(?Response $response, ?string $sender, ?string $recipient, ?string $CC, ?string $BCC, ?string $subject, ?string $content, MailRepository $mailRepository, MailerInterface $mailer, EntityManagerInterface $entityManager, ?User $user)
+    {
+        $this->response = $response;
+        $this->sender = $sender;
+        $this->recipient = $recipient;
+        $this->CC = $CC;
+        $this->BCC = $BCC;
+        $this->subject = $subject;
+        $this->content = $content;
+        $this->user = $user;
+
+        $this->date = new DateTime();
+
+        $entityManager->persist($this);
+        $entityManager->flush();
+
+        $mailRepository->sendMail($this, $mailer);
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +171,30 @@ class Mail
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(?string $subject): self
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
