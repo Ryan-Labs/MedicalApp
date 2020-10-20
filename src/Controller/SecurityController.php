@@ -2,17 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Mail;
 use App\Entity\User;
 use App\Form\LoginUserType;
+use App\Form\NewPasswordAfterResettingType;
 use App\Form\ProfileUserType;
 use App\Form\RegisterUserType;
+use App\Form\ResetPasswordType;
 use App\Form\UpdateMailUserType;
 use App\Form\UpdatePasswordUserType;
+use App\Repository\MailRepository;
+use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -136,6 +145,118 @@ class SecurityController extends AbstractController
             'form' => $form->createView(),
             'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/resetPassword", name="reset_passowrd")
+     */
+    public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
+    {
+        $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
+
+        $error = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $user = $userRepository->findOneBy(['mail' => $data['mail']], null);
+
+            if(!$user){
+                $error = "User not found";
+            } else {
+                $token = $tokenGenerator->generateToken();
+                $user->setResetToken($token);
+
+                $datetime = new DateTime();
+                $datetime->add(new \DateInterval('PT10M'));
+                $user->setTokenEndTime($datetime);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $url = $this->generateUrl('reset_password_with_token', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+
+                new Mail(
+                    null,
+                    "appmedicalipssi@gmail.com",
+                    $user->getMail(),
+                    null,
+                    null,
+                    "Mot de passe oublié",
+                    "Bonjour, Vous avez souhaité renouveler votre mot de passe pour accéder à votre compte. Pour cela, veuillez vous rendre sur le lien suivant: " . $url,
+                    $mailRepository,
+                    $mailer,
+                    $entityManager,
+                    $user
+                );
+
+                //TODO message flash: un mail vous a été envoyé
+
+            }
+
+        }
+
+        return $this->render('security/reset_pwd.html.twig', [
+            'form' => $form->createView(),
+            'error' => $error
+        ]);
+    }
+
+    /**
+     * @Route("/resetPassword/{token}", name="reset_password_with_token")
+     */
+    public function resetPasswordWithToken($token, Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
+    {
+        $form = $this->createForm(NewPasswordAfterResettingType::class);
+        $form->handleRequest($request);
+
+        $user = $userRepository->findOneBy(['resetToken' => $token], null);
+
+        if(!$user){
+            //TODO message flash
+            return $this->redirectToRoute('login');
+        }
+
+        if($user->getTokenEndTime() < new DateTime()){
+            //TODO message flash: lien expiré
+            return $this->redirectToRoute('login');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setResetToken(null);
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            new Mail(
+                null,
+                "appmedicalipssi@gmail.com",
+                $user->getMail(),
+                null,
+                null,
+                "Mot de passe modifié avec succès",
+                "Le mot de passe vous permettant de vous connecter a été modifié récemment. Si vous êtes à l’origine de cette modification, aucune autre action n’est requise. Si vous n’avez pas effectué cette modification, veuillez réinitialiser votre mot de passe pour sécuriser votre compte.", //TODO lien vers la route reset_password
+                $mailRepository,
+                $mailer,
+                $entityManager,
+                $user
+            );
+
+            //TODO message flash
+            return $this->redirectToRoute('login');
+
+        }
+
+        return $this->render('security/new_pwd_after_resetting.html.twig', [
+            'form' => $form->createView(),
+            'token' => $token
+        ]);
+
     }
 
 }
