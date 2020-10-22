@@ -28,6 +28,14 @@ class SecurityController extends AbstractController
 {
 
     /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        return $this->render('base.html.twig', []);
+    }
+
+    /**
      * @Route("/register", name="register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
@@ -163,7 +171,7 @@ class SecurityController extends AbstractController
             $user = $userRepository->findOneBy(['mail' => $data['mail']], null);
 
             if(!$user){
-                $error = "User not found";
+                $this->addFlash('danger', 'Utilisateur non trouvé.');
             } else {
                 $token = $tokenGenerator->generateToken();
                 $user->setResetToken($token);
@@ -191,15 +199,14 @@ class SecurityController extends AbstractController
                     $user
                 );
 
-                //TODO message flash: un mail vous a été envoyé
+                $this->addFlash('warning', 'Un lien pour réinitialiser votre mot de passe a été envoyé à l\'adresse e-mail saisie.');
 
             }
 
         }
 
         return $this->render('security/reset_pwd.html.twig', [
-            'form' => $form->createView(),
-            'error' => $error
+            'form' => $form->createView()
         ]);
     }
 
@@ -213,13 +220,8 @@ class SecurityController extends AbstractController
 
         $user = $userRepository->findOneBy(['resetToken' => $token], null);
 
-        if(!$user){
-            //TODO message flash
-            return $this->redirectToRoute('login');
-        }
-
-        if($user->getTokenEndTime() < new DateTime()){
-            //TODO message flash: lien expiré
+        if(!$user || ($user->getTokenEndTime() < new DateTime())){
+            $this->addFlash('danger', 'Votre demande de réinitialisation de mot de passe a expiré.');
             return $this->redirectToRoute('login');
         }
 
@@ -247,7 +249,7 @@ class SecurityController extends AbstractController
                 $user
             );
 
-            //TODO message flash
+            $this->addFlash('success', 'Votre mot de passe a été réinitialisé avec succès.');
             return $this->redirectToRoute('login');
 
         }

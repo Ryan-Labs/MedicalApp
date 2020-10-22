@@ -2,9 +2,7 @@
 
 {% block body %}
     {{ form_start(form) }}
-    {% if error %}
-        <div>{{ error }}</div>
-    {% endif %}
+    <p>Veuillez saisir votre email. Nous vous enverrons un lien pour renouveler votre mot de passe.</p>
     {{ form_row(form.mail) }}
     {{ form_row(form.submit) }}
     {{ form_end(form) }}
