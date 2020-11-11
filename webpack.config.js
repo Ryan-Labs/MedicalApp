@@ -25,6 +25,7 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('writeAd', './assets/js/writeAd.js')
+    .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     //.addEntry('page1', './assets/page1.js')
     //.addEntry('page2', './assets/page2.js')
 

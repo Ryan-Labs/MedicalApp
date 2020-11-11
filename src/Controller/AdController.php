@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,22 @@ class AdController extends AbstractController
     public function new(Request $request): Response
     {
         $ad = new Ad();
+        $user = $this->getUser();
+
         $form = $this->createForm(AdType::class, $ad);
+        $form->get('profession')->setData($user->getProfession());
+        $form->get('contact')->setData($user);
+        $form->get('phoneNumber')->setData($user->getPhoneNumber());
+        $form->get('mail')->setData($user->getMail());
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $ad->setUser($user);
+            $ad->setStatus('ACTIVE');
+            $ad->setDate(new DateTime());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ad);
             $entityManager->flush();

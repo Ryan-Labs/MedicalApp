@@ -18,7 +18,6 @@
                 <th>Sector</th>
                 <th>Content</th>
                 <th>Address</th>
-                <th>IsActive</th>
                 <th>Date</th>
                 <th>actions</th>
             </tr>
@@ -36,7 +35,6 @@
                 <td>{{ ad.sector }}</td>
                 <td>{{ ad.content }}</td>
                 <td>{{ ad.address }}</td>
-                <td>{{ ad.isActive ? 'Yes' : 'No' }}</td>
                 <td>{{ ad.date ? ad.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>

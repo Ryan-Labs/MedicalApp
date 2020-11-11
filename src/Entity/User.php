@@ -90,6 +90,11 @@ class User implements UserInterface
      */
     private $tokenEndTime;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $salutation;
+
     public function __construct()
     {
         $this->ads = new ArrayCollection();
@@ -367,6 +372,29 @@ class User implements UserInterface
         $this->tokenEndTime = $tokenEndTime;
 
         return $this;
+    }
+
+    public function getSalutation(): ?string
+    {
+        return $this->salutation;
+    }
+
+    public function setSalutation(?string $salutation): self
+    {
+        $this->salutation = $salutation;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        $rtr = [$this->getSalutation(), $this->getFirstName(), $this->getLastName()];
+        return implode(' ', $rtr);
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
 }

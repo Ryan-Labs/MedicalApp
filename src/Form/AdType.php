@@ -4,6 +4,11 @@ namespace App\Form;
 
 use App\Entity\Ad;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,15 +23,16 @@ class AdType extends AbstractType
             ->add('appointments')
             ->add('software')
             ->add('houseKeeping')
-            ->add('sector')
-            ->add('content')
+            ->add('sector', ChoiceType::class, ['choices' => ['1' => '1', '2' => '2', '3' => '3'], 'required' => false])
+            ->add('title')
+            ->add('content', TextareaType::class)
             ->add('address')
-            ->add('isActive')
-            ->add('date')
             ->add('profession')
             ->add('type')
-            ->add('remunerationType')
-            ->add('user')
+            ->add('remunerationType', ChoiceType::class, ['choices' => ['Pourcentage' => 'Pourcentage', 'Fixe' => 'Fixe'], 'required' => false])
+            ->add('contact', TextType::class, ['required' => false])
+            ->add('phoneNumber', TextType::class, ['required' => false])
+            ->add('mail', EmailType::class, ['required' => false])
         ;
     }
 

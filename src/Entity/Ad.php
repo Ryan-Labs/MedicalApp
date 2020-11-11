@@ -32,8 +32,8 @@ class Ad
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity=RemunerationType::class)
-     */
+     * @ORM\Column(type="string", length=255, nullable=true)
+*/
     private $remunerationType;
 
     /**
@@ -88,11 +88,6 @@ class Ad
     private $user;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isActive;
-
-    /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="ad", orphanRemoval=true)
      */
     private $pictures;
@@ -116,6 +111,31 @@ class Ad
      * @ORM\OneToMany(targetEntity=Paiement::class, mappedBy="ad")
      */
     private $paiements;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mail;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phoneNumber;
 
     public function __construct()
     {
@@ -154,12 +174,12 @@ class Ad
         return $this;
     }
 
-    public function getRemunerationType(): ?RemunerationType
+    public function getRemunerationType(): ?string
     {
         return $this->remunerationType;
     }
 
-    public function setRemunerationType(?RemunerationType $remunerationType): self
+    public function setRemunerationType(?string $remunerationType): self
     {
         $this->remunerationType = $remunerationType;
 
@@ -282,18 +302,6 @@ class Ad
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getIsActive(): ?bool
-    {
-        return $this->isActive;
-    }
-
-    public function setIsActive(bool $isActive): self
-    {
-        $this->isActive = $isActive;
 
         return $this;
     }
@@ -430,6 +438,66 @@ class Ad
                 $paiement->setAd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getContact(): ?string
+    {
+        return $this->contact;
+    }
+
+    public function setContact(?string $contact): self
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
