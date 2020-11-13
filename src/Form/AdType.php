@@ -3,11 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Ad;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +24,7 @@ class AdType extends AbstractType
             ->add('houseKeeping')
             ->add('sector', ChoiceType::class, ['choices' => ['1' => '1', '2' => '2', '3' => '3'], 'required' => false])
             ->add('title')
-            ->add('content', TextareaType::class)
+            ->add('content', CKEditorType::class)
             ->add('address')
             ->add('profession')
             ->add('type')
