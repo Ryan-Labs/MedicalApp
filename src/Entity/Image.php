@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PictureRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PictureRepository::class)
+ * @ORM\Entity(repositoryClass=ImageRepository::class)
  */
-class Picture
+class Image
 {
     /**
      * @ORM\Id()
@@ -18,13 +18,12 @@ class Picture
     private $id;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $file;
+    private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ad::class, inversedBy="pictures")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Ad::class, inversedBy="images")
      */
     private $ad;
 
@@ -33,14 +32,14 @@ class Picture
         return $this->id;
     }
 
-    public function getFile()
+    public function getName(): ?string
     {
-        return $this->file;
+        return $this->name;
     }
 
-    public function setFile($file): self
+    public function setName(?string $name): self
     {
-        $this->file = $file;
+        $this->name = $name;
 
         return $this;
     }

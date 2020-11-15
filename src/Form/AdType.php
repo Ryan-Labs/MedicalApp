@@ -7,6 +7,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,7 @@ class AdType extends AbstractType
             ->add('contact', TextType::class, ['required' => false])
             ->add('phoneNumber', TextType::class, ['required' => false])
             ->add('mail', EmailType::class, ['required' => false])
+            ->add('images', FileType::class, ['required' => false, 'multiple' => true, 'mapped' => false])
         ;
     }
 

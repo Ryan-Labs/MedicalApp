@@ -51,6 +51,14 @@
                 <th>Date</th>
                 <td>{{ ad.date ? ad.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>Images</th>
+                <td>
+                    {% for image in ad.images %}
+                        <img src="{{ asset('/upload/' ~ image.name) }}" alt="Image" width="150" >
+                    {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

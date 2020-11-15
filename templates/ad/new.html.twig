@@ -56,6 +56,9 @@
 
             Description:
             {{ form_widget(form.content, { 'id': 'ad-content', 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Description de l\'annonce'}, 'required': 'true' }) }}
+
+            Photos:
+            {{ form_widget(form.images, { 'attr': {'oninput': 'this.className = ""'} }) }}
         </div>
         <div style="overflow:auto;">
             <div style="float:right;">

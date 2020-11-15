@@ -88,11 +88,6 @@ class Ad
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="ad", orphanRemoval=true)
-     */
-    private $pictures;
-
-    /**
      * @ORM\OneToMany(targetEntity=AdHistory::class, mappedBy="ad")
      */
     private $adHistories;
@@ -137,12 +132,17 @@ class Ad
      */
     private $phoneNumber;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="ad", cascade={"persist"})
+     */
+    private $images;
+
     public function __construct()
     {
-        $this->pictures = new ArrayCollection();
         $this->adHistories = new ArrayCollection();
         $this->responses = new ArrayCollection();
         $this->paiements = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -302,37 +302,6 @@ class Ad
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Picture[]
-     */
-    public function getPictures(): Collection
-    {
-        return $this->pictures;
-    }
-
-    public function addPicture(Picture $picture): self
-    {
-        if (!$this->pictures->contains($picture)) {
-            $this->pictures[] = $picture;
-            $picture->setAd($this);
-        }
-
-        return $this;
-    }
-
-    public function removePicture(Picture $picture): self
-    {
-        if ($this->pictures->contains($picture)) {
-            $this->pictures->removeElement($picture);
-            // set the owning side to null (unless already changed)
-            if ($picture->getAd() === $this) {
-                $picture->setAd(null);
-            }
-        }
 
         return $this;
     }
@@ -498,6 +467,37 @@ class Ad
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getAd() === $this) {
+                $image->setAd(null);
+            }
+        }
 
         return $this;
     }

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\Image;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,6 +46,11 @@ class AdController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $images = $form->get('images')->getData();
+            foreach ($images as $image){
+                $this->persistImage($image, $ad);
+            }
+
             $ad->setUser($user);
             $ad->setStatus('ACTIVE');
             $ad->setDate(new DateTime());
@@ -59,6 +66,16 @@ class AdController extends AbstractController
             'ad' => $ad,
             'form' => $form->createView(),
         ]);
+    }
+
+    private function persistImage($image, $ad)
+    {
+        $file = md5(uniqid()) . '.' . $image->guessExtension();
+        $image->move($this->getParameter('images_directory'), $file);
+
+        $img = new Image();
+        $img->setName($file);
+        $ad->addImage($img);
     }
 
     /**
@@ -80,6 +97,12 @@ class AdController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $images = $form->get('images')->getData();
+            foreach ($images as $image){
+                $this->persistImage($image, $ad);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('ad_index');
@@ -89,6 +112,25 @@ class AdController extends AbstractController
             'ad' => $ad,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/delete/image/{id}", name="ad_delete_image", methods={"DELETE"})
+     */
+    public function deleteImageFromAd(Image $image, Request $request){
+        $data = json_decode($request->getContent(), true);
+
+        if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
+            unlink($this->getParameter('images_directory') . '/' . $image->getName());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($image);
+            $entityManager->flush();
+
+            return new JsonResponse(['success' => 1]);
+        }
+
+        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
 
     /**
