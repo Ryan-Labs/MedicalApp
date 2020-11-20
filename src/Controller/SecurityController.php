@@ -43,11 +43,9 @@ class SecurityController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
-        dump($form);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form);
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setIsEnabled(true);
@@ -265,5 +263,4 @@ class SecurityController extends AbstractController
         ]);
 
     }
-
 }
