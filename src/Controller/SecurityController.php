@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
      */
     public function home()
     {
-        return $this->render('base.html.twig', []);
+        return $this->render('home.html.twig', []);
     }
 
     /**
@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('home');
         }
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
