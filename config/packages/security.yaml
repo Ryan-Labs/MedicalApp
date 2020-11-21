@@ -27,7 +27,7 @@ security:
                 target: /
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USERs
+        ROLE_ADMIN: ROLE_USER
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
