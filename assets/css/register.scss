@@ -1,0 +1,46 @@
+label, input {
+  margin-right: 20px;
+}
+
+.register-form {
+  height: 100%;
+  width: 800px;
+  margin: 200px auto;
+  border : 1px solid black;
+
+  &__container {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__lastname {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    margin-bottom: 30px;
+  }
+
+    &__profession{
+    align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    &__contact{
+      display: flex;
+      flex-direction: row;
+      justify-content:flex-start;
+      margin-bottom: 30px;
+    }
+
+    &__password {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+    }
+
+    &__submit {
+      text-align: center;
+    }
+}
+

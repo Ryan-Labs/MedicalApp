@@ -43,7 +43,9 @@ class SecurityController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setIsEnabled(true);
@@ -51,6 +53,7 @@ class SecurityController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
             return $this->redirectToRoute('login');
         }
         return $this->render('security/register.html.twig', [
@@ -260,5 +263,4 @@ class SecurityController extends AbstractController
         ]);
 
     }
-
 }
