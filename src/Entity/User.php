@@ -198,9 +198,8 @@ class User implements UserInterface
     }
 
     public function getProfessions(): Collection
-
     {
-    return $this->professions;
+        return $this->professions;
     }
 
     public function addProfession(Profession $professions): self
