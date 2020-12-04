@@ -1,7 +1,23 @@
-.idea
+###> symfony/framework-bundle ###
+.env.local
+public/upload/
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/fgit pramework-bundle ###
 
-node_modules/
-public/build/
-var/
-vendor/
-docker/
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
