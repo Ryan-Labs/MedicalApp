@@ -56,9 +56,9 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity=Profession::class)
+     *@ORM\ManyToMany(targetEntity="App\Entity\Profession", inversedBy="users", cascade={"persist", "remove"})
      */
-    private $profession;
+    private $professions;
 
     /**
      * @ORM\OneToMany(targetEntity=Ad::class, mappedBy="user", orphanRemoval=true)
@@ -100,6 +100,7 @@ class User implements UserInterface
         $this->ads = new ArrayCollection();
         $this->responses = new ArrayCollection();
         $this->paiements = new ArrayCollection();
+        $this->professions = new ArrayCollection();
         $this->roles = array('ROLE_USER');
         $this->mails = new ArrayCollection();
     }
@@ -132,6 +133,7 @@ class User implements UserInterface
 
         return $this;
     }
+
 
     public function getMail(): ?string
     {
@@ -195,17 +197,31 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getProfession(): ?Profession
+    public function getProfessions(): Collection
+
     {
-        return $this->profession;
+    return $this->professions;
     }
 
-    public function setProfession(?Profession $profession): self
+    public function addProfession(Profession $professions): self
     {
-        $this->profession = $profession;
 
+        if (!$this->professions->contains($professions)) {
+            $this->professions[] = $professions;
+            $professions->addUser($this);
+        }
+        return $this->professions;
+    }
+    public function removeProfession(Profession $professions): self
+    {
+        if ($this->professions->contains($professions)) {
+            $this->profession->removeElement($professions);
+            $professions->removeUser($this);
+        }
         return $this;
     }
+
+
 
     /**
      * @return Collection|Ad[]

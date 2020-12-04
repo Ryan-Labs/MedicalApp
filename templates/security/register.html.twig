@@ -1,14 +1,41 @@
 {% extends 'base.html.twig' %}
 
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('registerStyle') }}
+    {% endblock %}
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.firstName) }}
-    {{ form_row(form.lastName) }}
-    {{ form_row(form.mail) }}
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
-    {{ form_row(form.phoneNumber) }}
-    {{ form_row(form.profession) }}
-    {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+
+    <div class="register-form">
+        {{ form_start(form) }}
+
+        <div class="register-form__container">
+            <div class="register-form__lastname">
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.lastName) }}
+            </div>
+
+            <div class="register-form__profession">
+                {{ form_row(form.professions) }}
+            </div>
+
+            <div class="register-form__contact">
+                {{ form_row(form.phoneNumber) }}
+                {{ form_row(form.mail) }}
+            </div>
+
+            <div class="register-form__password">
+                {{ form_row(form.password.first) }}
+                {{ form_row(form.password.second) }}
+            </div>
+
+            <div class="register-form__submit">
+                {{ form_row(form.submit) }}
+            </div>
+
+        </div>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
