@@ -37,7 +37,7 @@ class AdController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(AdType::class, $ad);
-        $form->get('profession')->setData($user->getProfession());
+        $form->get('profession')->setData($user->getProfessions()[0]);
         $form->get('contact')->setData($user);
         $form->get('phoneNumber')->setData($user->getPhoneNumber());
         $form->get('mail')->setData($user->getMail());
