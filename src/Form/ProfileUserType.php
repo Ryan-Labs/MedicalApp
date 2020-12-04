@@ -2,8 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Profession;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,10 +16,16 @@ class ProfileUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('salutation', ChoiceType::class, ['choices' => ['M.' => 'M.', 'Mme' => 'Mme'], 'required' => false])
             ->add('firstName')
             ->add('lastName')
             ->add('phoneNumber')
-            ->add('profession')
+            ->add('professions', EntityType::class , [
+                'class' => Profession::class,
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true
+            ])
             ->add('submit', SubmitType::class)
         ;
     }
