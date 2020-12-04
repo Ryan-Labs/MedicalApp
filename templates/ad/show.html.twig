@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ad{% endblock %}
+
+{% block body %}
+    <h1>Ad</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ad.id }}</td>
+            </tr>
+            <tr>
+                <th>HaveSecretariat</th>
+                <td>{{ ad.haveSecretariat ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>HomeVisit</th>
+                <td>{{ ad.homeVisit ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Housing</th>
+                <td>{{ ad.housing ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Appointments</th>
+                <td>{{ ad.appointments }}</td>
+            </tr>
+            <tr>
+                <th>Software</th>
+                <td>{{ ad.software }}</td>
+            </tr>
+            <tr>
+                <th>HouseKeeping</th>
+                <td>{{ ad.houseKeeping ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Sector</th>
+                <td>{{ ad.sector }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ ad.content }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ ad.address }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ ad.date ? ad.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Images</th>
+                <td>
+                    {% for image in ad.images %}
+                        <img src="{{ asset('/upload/' ~ image.name) }}" alt="Image" width="150" >
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ad_index') }}">back to list</a>
+
+    <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
+
+    {{ include('ad/_delete_form.html.twig') }}
+{% endblock %}

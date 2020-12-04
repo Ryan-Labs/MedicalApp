@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ad{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('writeAdStyle') }}
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form, {'attr': {'id': 'regForm'}}) }}
+        <h2>Créer une annonce</h2>
+
+        <div class="tab">
+            Profession:
+            <p>{{ form_widget(form.profession, { 'required': 'true' }) }}</p>
+
+            Type d'annonce:
+            <p>{{ form_widget(form.type, { 'required': 'true' }) }}</p>
+        </div>
+        <div class="tab">Contact:
+            <p>{{ form_widget(form.contact, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Nom de la personne à contacter'} }) }}</p>
+            <p>{{ form_widget(form.phoneNumber, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Téléphone...'} }) }}</p>
+            <p>{{ form_widget(form.mail, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'E-mail...', 'type': 'email'} }) }}</p>
+        </div>
+        <div class="tab">Rétrocession:
+            <p>{{ form_widget(form.remunerationType, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Type de rémunération'} }) }}</p>
+
+            Secteur:
+            <p>{{ form_widget(form.sector) }}</p>
+
+            Location:
+            <p>{{ form_widget(form.address, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Adresse, Lieu, Région, Ville...'} }) }}</p>
+        </div>
+        <div class="tab">Secretariat:
+            <p>{{ form_widget(form.haveSecretariat) }}</p>
+
+            Visite à domicile:
+            <p>{{ form_widget(form.homeVisit) }}</p>
+
+            Logement:
+            <p>{{ form_widget(form.housing) }}</p>
+
+            Entretien ménager:
+            <p>{{ form_widget(form.houseKeeping) }}</p>
+
+            Nombre de rendez-vous:
+            <p>{{ form_widget(form.appointments, { 'attr': {'oninput': 'this.className = ""', 'placeholder': '20 rendez-vous hebdomadaire...'} }) }}</p>
+
+            Logiciel utilisé:
+            <p>{{ form_widget(form.software, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Nom du logiciel'} }) }}</p>
+        </div>
+        <div class="tab">Titre:
+            <p>{{ form_widget(form.title, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Titre de l\'annonce'}, 'required': 'true' }) }}</p>
+
+            Description:
+            {{ form_widget(form.content, { 'id': 'ad-content', 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Description de l\'annonce'}, 'required': 'true' }) }}
+
+            Photos:
+            {{ form_widget(form.images, { 'attr': {'oninput': 'this.className = ""'} }) }}
+        </div>
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Précédent</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Suivant</button>
+            </div>
+        </div>
+        <!-- Circles which indicates the steps of the form: -->
+        <div style="text-align:center;margin-top:40px;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
+    {{ form_end(form) }}
+
+    <a href="{{ path('ad_index') }}">back to list</a>
+
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('writeAd') }}
+    {% endblock %}
+
+{% endblock %}
+

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Profession;
+use App\Entity\AdType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -81,6 +82,23 @@ class AppFixtures extends Fixture
             $profession = new Profession();
             $profession->setName($value);
             $manager->persist($profession);
+        }
+
+        //AdTypes
+        $adTypes = [
+            'Cession de patientèle',
+            'Collaboration libérale',
+            'Demande d’emploi',
+            'Location de cabinet',
+            'Offre d’emploi',
+            'Remplacement',
+            'Vente de locaux'
+        ];
+
+        foreach ($adTypes as $value) {
+            $adType = new AdType();
+            $adType->setName($value);
+            $manager->persist($adType);
         }
 
         $manager->flush();

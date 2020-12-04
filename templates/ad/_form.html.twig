@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <h2>Images</h2>
+    {% for image in ad.images %}
+        <div>
+            <img src="{{ asset('/upload/' ~ image.name) }}" alt="Image" width="150" >
+            <a href="{{ path('ad_delete_image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Supprimer</a>
+        </div>
+    {% endfor %}
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('images') }}
+{% endblock %}
