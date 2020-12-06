@@ -7,6 +7,11 @@
     {{ encore_entry_link_tags('writeAdStyle') }}
 {% endblock %}
 
+{% block head %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIOpIph9rbHtDruE7bc0hHN9Ze-fz7Ik4&callback=initAutocomplete&libraries=places&v=weekly" defer ></script>
+{% endblock %}
+
 {% block body %}
 
     {{ form_start(form, {'attr': {'id': 'regForm'}}) }}
@@ -31,7 +36,14 @@
             <p>{{ form_widget(form.sector) }}</p>
 
             Location:
-            <p>{{ form_widget(form.address, { 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Adresse, Lieu, Région, Ville...'} }) }}</p>
+            <div id="locationField" ><p>{{ form_widget(form.address, { 'id': 'autocomplete', 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Adresse, Lieu, Région, Ville...'} }) }}</p></div>
+            {{ form_widget(form.streetNumber, { 'id': 'street_number', 'disabled': 'true' }) }}
+            {{ form_widget(form.route, { 'id': 'route', 'disabled': 'true' }) }}
+            {{ form_widget(form.locality, { 'id': 'locality', 'disabled': 'true' }) }}
+            {{ form_widget(form.administrativeAreaLevel1, { 'id': 'administrative_area_level_1', 'disabled': 'true' }) }}
+            {{ form_widget(form.country, { 'id': 'country', 'disabled': 'true' }) }}
+            {{ form_widget(form.postalCode, { 'id': 'postal_code', 'disabled': 'true' }) }}
+
         </div>
         <div class="tab">Secretariat:
             <p>{{ form_widget(form.haveSecretariat) }}</p>
@@ -81,6 +93,7 @@
     {% block javascripts %}
         {{ parent() }}
         {{ encore_entry_script_tags('writeAd') }}
+        {{ encore_entry_script_tags('addressProvider') }}
     {% endblock %}
 
 {% endblock %}

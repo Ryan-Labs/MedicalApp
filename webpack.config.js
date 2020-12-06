@@ -27,6 +27,7 @@ Encore
 
     .addEntry('writeAd', './assets/js/writeAd.js')
     .addEntry('images', './assets/js/images.js')
+    .addEntry('addressProvider', './assets/js/addressProvider.js')
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
 

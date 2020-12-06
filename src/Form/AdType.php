@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,12 @@ class AdType extends AbstractType
             ->add('title')
             ->add('content', CKEditorType::class)
             ->add('address')
+            ->add('streetNumber', HiddenType::class)
+            ->add('route', HiddenType::class)
+            ->add('locality', HiddenType::class)
+            ->add('administrativeAreaLevel1', HiddenType::class)
+            ->add('postalCode', HiddenType::class)
+            ->add('country', HiddenType::class)
             ->add('profession')
             ->add('type')
             ->add('remunerationType', ChoiceType::class, ['choices' => ['Pourcentage' => 'Pourcentage', 'Fixe' => 'Fixe'], 'required' => false])
