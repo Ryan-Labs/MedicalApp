@@ -137,6 +137,36 @@ class Ad
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $streetNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $route;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $locality;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $administrativeAreaLevel1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $postalCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $country;
+
     public function __construct()
     {
         $this->adHistories = new ArrayCollection();
@@ -498,6 +528,78 @@ class Ad
                 $image->setAd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStreetNumber(): ?string
+    {
+        return $this->streetNumber;
+    }
+
+    public function setStreetNumber(?string $streetNumber): self
+    {
+        $this->streetNumber = $streetNumber;
+
+        return $this;
+    }
+
+    public function getRoute(): ?string
+    {
+        return $this->route;
+    }
+
+    public function setRoute(?string $route): self
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    public function getLocality(): ?string
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(?string $locality): self
+    {
+        $this->locality = $locality;
+
+        return $this;
+    }
+
+    public function getAdministrativeAreaLevel1(): ?string
+    {
+        return $this->administrativeAreaLevel1;
+    }
+
+    public function setAdministrativeAreaLevel1(?string $administrativeAreaLevel1): self
+    {
+        $this->administrativeAreaLevel1 = $administrativeAreaLevel1;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }
