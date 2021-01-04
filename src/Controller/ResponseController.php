@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Response;
 use App\Form\ResponseType;
+use App\Repository\AdRepository;
 use App\Repository\ResponseRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,6 +49,32 @@ class ResponseController extends AbstractController
             'response' => $response,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/newFromAd", name="response_new_from_ad", methods={"GET","POST"})
+     */
+    public function newFromAd(Request $request, AdRepository $adRepository){
+
+        //récupérer le currentUser
+        $user = $this->getUser();
+
+        //récupérer l'annonce
+        $data = json_decode($request->getContent(), true);
+        $ad = $adRepository->findOneBy(['id' => $data['responseObj']['adId']], null);
+
+        //enregistrer la reponse
+        $response = new Response();
+        $response->setUser($user);
+        $response->setContent($data['responseObj']['content']);
+        $response->setAd($ad);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($response);
+        $entityManager->flush();
+
+
+        return new JsonResponse(['success' => 1]);
     }
 
     /**

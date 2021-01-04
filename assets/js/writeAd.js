@@ -1,10 +1,10 @@
 
-var currentTab = 0;
+let currentTab = 0;
 showTab(currentTab);
 
 function showTab(n) {
 
-    var x = document.getElementsByClassName("tab");
+    let x = document.getElementsByClassName("tab");
     x[n].style.display = "block";
 
     if (n == 0) {
@@ -23,7 +23,7 @@ function showTab(n) {
 
 global.nextPrev = function nextPrev(n) {
 
-    var x = document.getElementsByClassName("tab");
+    let x = document.getElementsByClassName("tab");
 
     if (n == 1 && !validateForm()) return false;
 
@@ -40,7 +40,7 @@ global.nextPrev = function nextPrev(n) {
 
 function validateForm() {
 
-    var x, y, i, valid = true;
+    let x, y, i, valid = true;
     x = document.getElementsByClassName("tab");
     y = x[currentTab].querySelectorAll("input,select,textarea");
 
@@ -61,7 +61,7 @@ function validateForm() {
 
 function fixStepIndicator(n) {
 
-    var i, x = document.getElementsByClassName("step");
+    let i, x = document.getElementsByClassName("step");
     for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace(" active", "");
     }

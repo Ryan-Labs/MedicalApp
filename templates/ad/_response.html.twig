@@ -4,8 +4,8 @@
 
 <div id="responseSection" style="display: none">
     <p>Votre message</p>
-    <textarea name="content">Contenu</textarea>
-    <button type="button" id="sendResponse">Envoyer la candidature</button>
+    <textarea name="content" id="content">Contenu</textarea>
+    <button type="button" id="sendResponse" onclick="buildResponse({{ ad.id }})">Envoyer la candidature</button>
 </div>
 
 {% block javascripts %}
