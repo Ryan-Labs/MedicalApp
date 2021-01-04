@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -23,6 +24,14 @@ class RegisterUserType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
+            ->add('salutation', ChoiceType::class,
+                [
+                    'choices' => [
+                        'Monsieur' => 'Male',
+                        'Madame' => 'Female',
+                    ],
+                    'expanded'=>true
+                ])
             ->add('mail', EmailType::class)
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
