@@ -1,0 +1,13 @@
+<h2>Candidater</h2>
+
+<button type="button" onclick="showContent()">Candidater</button>
+
+<div id="responseSection" style="display: none">
+    <p>Votre message</p>
+    <textarea name="content">Contenu</textarea>
+    <button type="button" id="sendResponse">Envoyer la candidature</button>
+</div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('createResponse') }}
+{% endblock %}
