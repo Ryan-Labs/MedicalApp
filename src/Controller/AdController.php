@@ -103,7 +103,8 @@ class AdController extends AbstractController
         $profession = '';
         $phoneNumber = '';
         $mail = '';
-        $name = '';
+
+        $sameUser = false;
 
         if ($user) {
 
@@ -118,9 +119,13 @@ class AdController extends AbstractController
             $phoneNumber = $user->getPhoneNumber();
             $mail = $user->getMail();
 
-            $name = implode(' ', [$user->getSalutation(), $user->getFirstName(), $user->getLastName()]);
+            if ($user->getId() == $ad->getUser()->getId()) {
+                $sameUser = true;
+            }
 
         }
+
+        $responses = $responseRepository->findBy(['ad' => $ad]);
 
         return $this->render('ad/show.html.twig', [
             'ad' => $ad,
@@ -128,7 +133,9 @@ class AdController extends AbstractController
             'profession' => $profession,
             'phoneNumber' => $phoneNumber,
             'mail' => $mail,
-            'name' => $name
+            'sameUser' => $sameUser,
+            'responses' => $responses,
+            'currentUser' => $user
         ]);
 
     }
