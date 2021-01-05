@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use App\Entity\Image;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use App\Repository\ResponseRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,10 +82,21 @@ class AdController extends AbstractController
     /**
      * @Route("/{id}", name="ad_show", methods={"GET"})
      */
-    public function show(Ad $ad): Response
+    public function show(Ad $ad, ResponseRepository $responseRepository): Response
     {
+        $hasResponse = false;
+        $user = $this->getUser();
+
+        if ($user) {
+            $response = $responseRepository->findOneBy(['user' => $user, 'ad' => $ad], null);
+            if ($response) {
+                $hasResponse = true;
+            }
+        }
+
         return $this->render('ad/show.html.twig', [
             'ad' => $ad,
+            'hasResponse' => $hasResponse
         ]);
     }
 

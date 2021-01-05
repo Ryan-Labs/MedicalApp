@@ -1,12 +1,22 @@
-<h2>Candidater</h2>
 
-<button type="button" onclick="showContent()">Candidater</button>
+<input id="hasResponse" type="hidden" value="{{ hasResponse }}"/>
+<input id="isGranted" type="hidden" value="{{ is_granted('ROLE_USER') }}"/>
 
 <div id="responseSection" style="display: none">
-    <p>Votre message</p>
-    <textarea name="content" id="content">Contenu</textarea>
-    <button type="button" id="sendResponse" onclick="buildResponse({{ ad.id }})">Envoyer la candidature</button>
+
+    <div id="responseTitle">
+        <p id="alreadyResponseMsg" style="display: none">Vous avez répondu à cette offre.</p>
+        <button id="displaySectionBtn" type="button" style="display: none" onclick="showContent()">Candidature</button>
+    </div>
+
+    <div id="responseBody" style="display: none">
+        <p>Votre message</p>
+        <textarea name="content" id="content">Contenu</textarea>
+        <button type="button" id="sendResponse" onclick="buildResponse({{ ad.id }})">Envoyer la candidature</button>
+    </div>
+
 </div>
+
 
 {% block javascripts %}
     {{ encore_entry_script_tags('createResponse') }}

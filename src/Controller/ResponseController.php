@@ -56,14 +56,14 @@ class ResponseController extends AbstractController
      */
     public function newFromAd(Request $request, AdRepository $adRepository){
 
-        //récupérer le currentUser
+        //get current user
         $user = $this->getUser();
 
-        //récupérer l'annonce
+        //get ad
         $data = json_decode($request->getContent(), true);
         $ad = $adRepository->findOneBy(['id' => $data['responseObj']['adId']], null);
 
-        //enregistrer la reponse
+        //store response
         $response = new Response();
         $response->setUser($user);
         $response->setContent($data['responseObj']['content']);
@@ -72,6 +72,9 @@ class ResponseController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($response);
         $entityManager->flush();
+
+        //flash message
+        $this->addFlash('warning', 'La candidature a bien été enregistrée.');
 
 
         return new JsonResponse(['success' => 1]);

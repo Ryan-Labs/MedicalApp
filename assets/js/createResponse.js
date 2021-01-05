@@ -1,19 +1,38 @@
+const isGranted = document.getElementById("isGranted").value;
+let hasResponse = document.getElementById("hasResponse").value;
+
+const responseSection = document.getElementById("responseSection");
+const responseBody = document.getElementById("responseBody");
+
+const alreadyResponseMsg = document.getElementById("alreadyResponseMsg");
+const displaySectionBtn = document.getElementById("displaySectionBtn");
+
+const content = document.getElementById("content");
+
+if (isGranted) {
+
+    responseSection.style.display = "block";
+
+    if (!hasResponse) {
+        displaySectionBtn.style.display = "block";
+    } else {
+        alreadyResponseMsg.style.display = "block";
+    }
+
+}
+
+
 global.showContent = function showContent() {
 
-    const responseSection = document.getElementById("responseSection");
-    const display = responseSection.style.display;
-
-    if ("none" == display) {
-        responseSection.style.display= "block";
+    if ("none" == responseBody.style.display) {
+        responseBody.style.display= "block";
     } else {
-        responseSection.style.display= "none";
+        responseBody.style.display= "none";
     }
 
 };
 
 global.buildResponse = function showContent(adId) {
-
-    const content = document.getElementById("content");
 
     let responseObj = {
         content: content.value,
@@ -31,9 +50,13 @@ global.buildResponse = function showContent(adId) {
             body: JSON.stringify({'responseObj': responseObj})
         }).then(data => {
 
-        });
+            hasResponse = 1;
+            displaySectionBtn.style.display = "none";
+            responseBody.style.display = "none";
+            alreadyResponseMsg.style.display = "block";
 
-        //document.location="/ad/";
+             document.location = "/ad/" + adId;
+        });
 
     }
 
