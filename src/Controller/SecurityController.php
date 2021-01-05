@@ -38,26 +38,43 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
     {
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-            $user->setIsEnabled(true);
-            $user->setRoles(['ROLE_USER']);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            if (!$this->mailAlreadyExist($user->getMail(), $userRepository)) {
+                $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+                $user->setIsEnabled(true);
+                $user->setRoles(['ROLE_USER']);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('home');
+            }
+
+            $this->addFlash('danger', 'L\'adresse mail saisie correspond déjà à un compte.');
+
         }
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function mailAlreadyExist(string $mail, UserRepository $userRepository) {
+        $users = $userRepository->findBy(['mail' => $mail]);
+
+        if ($users) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
