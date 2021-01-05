@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Mail;
 use App\Entity\Response;
 use App\Form\ResponseType;
 use App\Repository\AdRepository;
@@ -77,16 +78,17 @@ class ResponseController extends AbstractController
         //flash message
         $this->addFlash('warning', 'La candidature a bien été enregistrée.');
 
-        /*
+
         //send mail to ad author
+        /*
         new Mail(
-            null,
+            $response,
             "appmedicalipssi@gmail.com",
-            $user->getMail(),
+            $ad->getUser()->getMail(),
             null,
             null,
-            "Mot de passe oublié",
-            "Bonjour, Vous avez souhaité renouveler votre mot de passe pour accéder à votre compte. Pour cela, veuillez vous rendre sur le lien suivant: " . $url,
+            "Nouvelle candidature à votre annonce",
+            "Bonjour, votre annonce " . XX . " a fait l'objet d'une nouvelle candidature : " . $url,
             $mailRepository,
             $mailer,
             $entityManager,
@@ -107,7 +109,6 @@ class ResponseController extends AbstractController
         return $this->render('response/self.html.twig', [
             'responses' => $responseRepository->findBy(['user' => $user]),
         ]);
-
 
     }
 

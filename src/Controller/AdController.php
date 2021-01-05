@@ -80,6 +80,19 @@ class AdController extends AbstractController
     }
 
     /**
+     * @Route("/self", name="ad_self", methods={"GET"})
+     */
+    public function self(AdRepository $adRepository): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('ad/self.html.twig', [
+            'ads' => $adRepository->findBy(['user' => $user], ['date' => 'DESC'])
+        ]);
+
+    }
+
+    /**
      * @Route("/{id}", name="ad_show", methods={"GET"})
      */
     public function show(Ad $ad, ResponseRepository $responseRepository): Response
