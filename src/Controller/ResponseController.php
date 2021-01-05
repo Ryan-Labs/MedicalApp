@@ -76,7 +76,6 @@ class ResponseController extends AbstractController
         //flash message
         $this->addFlash('warning', 'La candidature a bien été enregistrée.');
 
-
         return new JsonResponse(['success' => 1]);
     }
 

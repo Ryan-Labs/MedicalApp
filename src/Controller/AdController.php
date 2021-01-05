@@ -87,17 +87,37 @@ class AdController extends AbstractController
         $hasResponse = false;
         $user = $this->getUser();
 
+        $profession = '';
+        $phoneNumber = '';
+        $mail = '';
+        $name = '';
+
         if ($user) {
+
+            //return if user has already response
             $response = $responseRepository->findOneBy(['user' => $user, 'ad' => $ad], null);
             if ($response) {
                 $hasResponse = true;
             }
+
+            //return user entity fields
+            $profession = $user->getProfessions()[0];
+            $phoneNumber = $user->getPhoneNumber();
+            $mail = $user->getMail();
+
+            $name = implode(' ', [$user->getSalutation(), $user->getFirstName(), $user->getLastName()]);
+
         }
 
         return $this->render('ad/show.html.twig', [
             'ad' => $ad,
-            'hasResponse' => $hasResponse
+            'hasResponse' => $hasResponse,
+            'profession' => $profession,
+            'phoneNumber' => $phoneNumber,
+            'mail' => $mail,
+            'name' => $name
         ]);
+
     }
 
     /**

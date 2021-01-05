@@ -11,7 +11,17 @@
 
     <div id="responseBody" style="display: none">
         <p>Votre message</p>
-        <textarea name="content" id="content">Contenu</textarea>
+        <textarea name="content" id="content" cols="50" rows="13">Bonjour,
+
+{% if profession %}Je suis {{ profession }} et je suis intéressé par votre annonce.
+{% else %}Je suis intéressé par votre annonce.
+{% endif %}
+
+Pourrions-nous échanger à ce sujet ? Je suis joignable {% if phoneNumber %}par téléphone au {{ phoneNumber }} ou {% endif %}par e-mail : {{ mail }}.
+
+Veuillez recevoir l'expression de mes sincères salutations.
+
+{{ name }}</textarea>
         <button type="button" id="sendResponse" onclick="buildResponse({{ ad.id }})">Envoyer la candidature</button>
     </div>
 
