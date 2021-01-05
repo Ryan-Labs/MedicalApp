@@ -6,7 +6,7 @@ use App\Entity\Response;
 use App\Form\ResponseType;
 use App\Repository\AdRepository;
 use App\Repository\ResponseRepository;
-use Psr\Log\LoggerInterface;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +68,7 @@ class ResponseController extends AbstractController
         $response->setUser($user);
         $response->setContent($data['responseObj']['content']);
         $response->setAd($ad);
+        $response->setDate(new DateTime());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($response);
@@ -76,7 +77,38 @@ class ResponseController extends AbstractController
         //flash message
         $this->addFlash('warning', 'La candidature a bien été enregistrée.');
 
+        /*
+        //send mail to ad author
+        new Mail(
+            null,
+            "appmedicalipssi@gmail.com",
+            $user->getMail(),
+            null,
+            null,
+            "Mot de passe oublié",
+            "Bonjour, Vous avez souhaité renouveler votre mot de passe pour accéder à votre compte. Pour cela, veuillez vous rendre sur le lien suivant: " . $url,
+            $mailRepository,
+            $mailer,
+            $entityManager,
+            $user
+        );
+        */
+
         return new JsonResponse(['success' => 1]);
+    }
+
+    /**
+     * @Route("/self", name="response_self", methods={"GET"})
+     */
+    public function self(ResponseRepository $responseRepository): HttpResponse
+    {
+        $user = $this->getUser();
+
+        return $this->render('response/self.html.twig', [
+            'responses' => $responseRepository->findBy(['user' => $user]),
+        ]);
+
+
     }
 
     /**
@@ -122,4 +154,5 @@ class ResponseController extends AbstractController
 
         return $this->redirectToRoute('response_index');
     }
+
 }

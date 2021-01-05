@@ -186,7 +186,7 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
 
                 $url = $this->generateUrl('reset_password_with_token', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-
+                /*
                 new Mail(
                     null,
                     "appmedicalipssi@gmail.com",
@@ -200,7 +200,7 @@ class SecurityController extends AbstractController
                     $entityManager,
                     $user
                 );
-
+                */
                 $this->addFlash('warning', 'Un lien pour réinitialiser votre mot de passe a été envoyé à l\'adresse e-mail saisie.');
 
             }

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Response index{% endblock %}
+
+{% block body %}
+    <h1>Response index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Annonce</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Statut de l'annonce</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for response in responses %}
+            <tr>
+                <td>{{ response.ad.title }}</td>
+                <td>{{ response.content }}</td>
+                <td>{{ response.date|date("d/m/y") }}</td>
+                <td>{{ response.ad.status }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
