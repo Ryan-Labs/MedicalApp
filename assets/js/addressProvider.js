@@ -7,7 +7,7 @@ const componentForm = {
     locality: "long_name",
     administrative_area_level_1: "short_name",
     country: "long_name",
-    postal_code: "short_name",
+    postal_code: "short_name"
 };
 
 global.initAutocomplete = function initAutocomplete() {
@@ -18,7 +18,7 @@ global.initAutocomplete = function initAutocomplete() {
 
     autocomplete.setFields(["address_component"]);
     autocomplete.addListener("place_changed", fillInAddress);
-}
+};
 
 function fillInAddress() {
     const place = autocomplete.getPlace();

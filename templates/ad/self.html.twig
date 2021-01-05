@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My ads{% endblock %}
+
+{% block body %}
+    <h1>My ads</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Responses</th>
+            <th>Status</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ad in ads %}
+            <tr>
+                <td>{{ ad.title }}</td>
+                <td>{{ ad.date|date('d/m/Y') }}</td>
+                <td>{{ ad.responses|length }}</td>
+                <td>{{ ad.status == "ACTIVE" ? "Ouvert" : "Fermé" }}</td>
+                <td>
+                    <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
+                    <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ad_new') }}">Create new</a>
+{% endblock %}

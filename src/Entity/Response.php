@@ -48,6 +48,11 @@ class Response
      */
     private $mail;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,18 @@ class Response
         if ($mail->getResponse() !== $this) {
             $mail->setResponse($this);
         }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
