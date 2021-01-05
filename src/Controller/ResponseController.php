@@ -6,13 +6,16 @@ use App\Entity\Mail;
 use App\Entity\Response;
 use App\Form\ResponseType;
 use App\Repository\AdRepository;
+use App\Repository\MailRepository;
 use App\Repository\ResponseRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/response")
@@ -55,7 +58,7 @@ class ResponseController extends AbstractController
     /**
      * @Route("/newFromAd", name="response_new_from_ad", methods={"GET","POST"})
      */
-    public function newFromAd(Request $request, AdRepository $adRepository){
+    public function newFromAd(Request $request, AdRepository $adRepository, MailRepository $mailRepository, MailerInterface $mailer){
 
         //get current user
         $user = $this->getUser();
@@ -78,9 +81,8 @@ class ResponseController extends AbstractController
         //flash message
         $this->addFlash('warning', 'La candidature a bien été enregistrée.');
 
-
         //send mail to ad author
-        /*
+        $url = $this->generateUrl('ad_show', ['id' => $ad->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
         new Mail(
             $response,
             "appmedicalipssi@gmail.com",
@@ -88,13 +90,13 @@ class ResponseController extends AbstractController
             null,
             null,
             "Nouvelle candidature à votre annonce",
-            "Bonjour, votre annonce " . XX . " a fait l'objet d'une nouvelle candidature : " . $url,
+            "Bonjour, votre annonce \"" . $ad->getTitle() . "\" a fait l'objet d'une nouvelle candidature. Utilisez ce lien pour toutes les visionner : " . $url,
             $mailRepository,
             $mailer,
             $entityManager,
             $user
         );
-        */
+
 
         return new JsonResponse(['success' => 1]);
     }

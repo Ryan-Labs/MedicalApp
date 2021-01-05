@@ -186,7 +186,7 @@ class SecurityController extends AbstractController
                 $entityManager->flush();
 
                 $url = $this->generateUrl('reset_password_with_token', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-                /*
+
                 new Mail(
                     null,
                     "appmedicalipssi@gmail.com",
@@ -200,7 +200,7 @@ class SecurityController extends AbstractController
                     $entityManager,
                     $user
                 );
-                */
+
                 $this->addFlash('warning', 'Un lien pour réinitialiser votre mot de passe a été envoyé à l\'adresse e-mail saisie.');
 
             }
@@ -237,6 +237,8 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $url = $this->generateUrl('reset_passowrd', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
             new Mail(
                 null,
                 "appmedicalipssi@gmail.com",
@@ -244,7 +246,7 @@ class SecurityController extends AbstractController
                 null,
                 null,
                 "Mot de passe modifié avec succès",
-                "Le mot de passe vous permettant de vous connecter a été modifié récemment. Si vous êtes à l’origine de cette modification, aucune autre action n’est requise. Si vous n’avez pas effectué cette modification, veuillez réinitialiser votre mot de passe pour sécuriser votre compte.", //TODO lien vers la route reset_password
+                "Le mot de passe vous permettant de vous connecter a été modifié récemment. Si vous êtes à l’origine de cette modification, aucune autre action n’est requise. Si vous n’avez pas effectué cette modification, veuillez réinitialiser votre mot de passe pour sécuriser votre compte. Vous pouvez faire ceci depuis ce lien : " . $url,
                 $mailRepository,
                 $mailer,
                 $entityManager,
