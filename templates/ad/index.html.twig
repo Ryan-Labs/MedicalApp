@@ -11,17 +11,29 @@
         <div class="ad_index__header__image">
         </div>
     </section>
-    <a href="{{ path('ad_new') }}">Create new</a>
+
     <div class="ad_index__content">
         <div class="ad_index__container">
 
             {% for ad in ads %}
-                <div class=" ad_card_custom card " >
-                    <a href="{{ path('ad_show', {'id': ad.id}) }}">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRiICWgjGSyhqA38ZpatCnopA8RlFjkQDn4w&usqp=CAU" class="card-img-top" alt="...">
+                <div class=" ad_card_custom card ">
+                    <a href="{{ path('ad_show', {'id': ad.id}) }}" style="text-decoration:none">
+                        {% set image = ad.images|first %}
+                        {% if image %}
+                            <img src="{{ asset('/upload/' ~ image.name) }}" alt="{{  image.name }}" class="card-img-top" style="max-width: 100%" >
+                        {% endif %}
+
+                        {% if ad.locality and ad.administrativeAreaLevel1 %}{% set address = ad.locality ~ ', ' ~ ad.administrativeAreaLevel1 %}
+                        {% elseif ad.locality %}{% set address = ad.locality %}
+                        {% elseif ad.administrativeAreaLevel1 %}{% set address = ad.administrativeAreaLevel1 %}
+                        {% else %}{% set address = '' %}
+                        {% endif %}
+
                         <div class="card-body">
                             <p class="card-title-custom">{{ ad.title }}</p>
-                            <p class="card-content-custom">{{ ad.content }}</p>
+                            <p class="card-subtitle mb-2 text-muted">{{ ad.profession.name }} - {{ ad.type.name }}</p>
+                            {% if address %}<p style="color: grey"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ address }}</p>{% endif %}
+                            <div class="card-content-custom" >{{ ad.content|raw }}</div>
                         </div>
                     </a>
                 </div>
