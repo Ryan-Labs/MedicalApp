@@ -1,0 +1,66 @@
+@import "~bootstrap/scss/bootstrap";
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #3ca2a8;
+}
+
+#login_user_submit {
+  background-color: #222222;
+  color: #dfdfdf;
+  margin-left: 53%;
+  border-radius: 5px;
+}
+
+#login_user_mail,
+#login_user_password {
+  border-radius: 5px;
+  height: 30px;
+}
+
+form[name="login_user"] {
+  margin-left: 12%;
+  margin-top: 5%;
+}
+
+#register_link_login,
+#reset_password_link_login {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: 12%;
+  text-decoration: underline black;
+  color: black;
+  font-size: 12px;
+}
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.title-login {
+  margin-top: 7%;
+  float: none;
+  width: 99%;
+  text-align: center;
+}
+
+.main-content {
+  min-height: 90vh;
+  margin: 0;
+}
+
+.justify-content-center {
+  min-height: 85%;
+}
+
+#wrapper {
+  min-height: 250px;
+  min-width: 250px;
+  background-color: #dfdfdf;
+  border-radius: 25px;
+  border: 1px #bbbbbb;
+  margin-top: 5%;
+}
