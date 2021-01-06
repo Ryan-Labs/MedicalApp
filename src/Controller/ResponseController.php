@@ -27,6 +27,8 @@ class ResponseController extends AbstractController
      */
     public function index(ResponseRepository $responseRepository): HttpResponse
     {
+        return $this->redirectToRoute('home');
+
         return $this->render('response/index.html.twig', [
             'responses' => $responseRepository->findAll(),
         ]);
@@ -151,17 +153,27 @@ class ResponseController extends AbstractController
     /**
      * @Route("/{id}", name="response_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Response $response): Response
+    public function delete(Request $request, Response $response): HttpResponse
     {
-        return $this->redirectToRoute('home');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
 
+        if ($this->getUser()->getId() != $response->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
+        dump("ligne 164");
         if ($this->isCsrfTokenValid('delete'.$response->getId(), $request->request->get('_token'))) {
+            dump("ligne 166");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($response);
             $entityManager->flush();
+
+            $this->addFlash('success', 'La candidature a bien été annulée.');
         }
 
-        return $this->redirectToRoute('response_index');
+        return $this->redirectToRoute('response_self');
     }
 
 }
