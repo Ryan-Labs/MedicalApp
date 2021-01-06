@@ -56,7 +56,7 @@ class ResponseController extends AbstractController
     }
 
     /**
-     * @Route("/newFromAd", name="response_new_from_ad", methods={"GET","POST"})
+     * @Route("/newFromAd", name="response_new_from_ad", methods={"POST"})
      */
     public function newFromAd(Request $request, AdRepository $adRepository, MailRepository $mailRepository, MailerInterface $mailer){
 
@@ -119,6 +119,8 @@ class ResponseController extends AbstractController
      */
     public function show(Response $response): HttpResponse
     {
+        return $this->redirectToRoute('home');
+
         return $this->render('response/show.html.twig', [
             'response' => $response,
         ]);
@@ -129,6 +131,8 @@ class ResponseController extends AbstractController
      */
     public function edit(Request $request, Response $response): HttpResponse
     {
+        return $this->redirectToRoute('home');
+
         $form = $this->createForm(ResponseType::class, $response);
         $form->handleRequest($request);
 
@@ -149,6 +153,8 @@ class ResponseController extends AbstractController
      */
     public function delete(Request $request, Response $response): Response
     {
+        return $this->redirectToRoute('home');
+
         if ($this->isCsrfTokenValid('delete'.$response->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($response);

@@ -38,7 +38,7 @@ class RegisterUserType extends AbstractType
                 'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat password'),
             ))
-            ->add('phoneNumber',TelType::class)
+            ->add('phoneNumber',TelType::class, ['required' => false])
             ->add('professions', EntityType::class , [
                 'class' => Profession::class,
                 'choice_label' => 'name',

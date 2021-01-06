@@ -3,9 +3,6 @@
 
 {% block body %}
     {{ form_start(form) }}
-    {% if error %}
-        <div>{{ error.messageKey }}</div>
-    {% endif %}
     {{ form_row(form.mail) }}
     {{ form_row(form.password) }}
     {{ form_row(form.submit) }}
