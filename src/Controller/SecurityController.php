@@ -40,6 +40,10 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
@@ -82,6 +86,10 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
         if ($authenticationUtils->getLastAuthenticationError()) {
@@ -98,6 +106,10 @@ class SecurityController extends AbstractController
      */
     public function profile(Request $request, EntityManagerInterface $entityManager)
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
         $user = $this->getUser();
         $form = $this->createForm(ProfileUserType::class, $user);
         $form->handleRequest($request);
@@ -181,6 +193,10 @@ class SecurityController extends AbstractController
      */
     public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
 
@@ -236,6 +252,10 @@ class SecurityController extends AbstractController
      */
     public function resetPasswordWithToken($token, Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(NewPasswordAfterResettingType::class);
         $form->handleRequest($request);
 
