@@ -1,10 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('loginStyle') }}
+{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.mail) }}
-    {{ form_row(form.password) }}
-    {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+    <body class="bg-default">
+        <div class="main-content">
+            <div class="h-75">
+                    <div class="row justify-content-center">
+                        <div class="title-login">
+                            <h1>Bienvenue!</h1>
+                            <p>
+                                Veuillez vous connecter <br>
+                                pour pouvoir intéragir avec la communauté de MedicalApp
+                            </p>
+                        </div>
+                        <br>
+                        <br>
+                        <div id="wrapper">
+                            {{ form_start(form) }}
+                            {% if error %}
+                                <div>{{ error.messageKey }}</div>
+                            {% endif %}
+                            <div class="form-content">
+                                {{ form_row(form.mail) }}
+                                <br>
+                                {{ form_row(form.password) }}
+                                <br>
+                                {{ form_row(form.submit) }}
+                                {{ form_end(form) }}
+
+                            </div>
+                            <br>
+                            <a id="reset_password_link_login" href="{{ path('reset_passowrd') }}">Mot de passe oublié?</a>
+                            <br>
+                            <a id="register_link_login" href="{{ path('register') }}">Pas encore inscrit?</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </body>
 {% endblock %}
