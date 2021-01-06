@@ -145,6 +145,14 @@ class AdController extends AbstractController
      */
     public function edit(Request $request, Ad $ad): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser()->getId() != $ad->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
 
@@ -190,6 +198,14 @@ class AdController extends AbstractController
      */
     public function delete(Request $request, Ad $ad): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser()->getId() != $ad->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$ad->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($ad);
