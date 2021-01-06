@@ -1,9 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('resetPasswordStyle') }}
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
-    <p>Veuillez saisir votre email. Nous vous enverrons un lien pour renouveler votre mot de passe.</p>
-    {{ form_row(form.mail) }}
-    {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+    <div class="main-content">
+        <div class="h-75">
+            <div class="wrap justify-content-center">
+                <p id="reset-password-text">
+                    Veuillez saisir votre email. <br>
+                    Nous vous enverrons un lien pour renouveler votre mot de passe.
+                </p>
+                <div id="wrapper">
+                    {{ form_start(form) }}
+                    <div class="form-content">
+                        {{ form_row(form.mail) }}
+                        <br>
+                        {{ form_row(form.submit) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
