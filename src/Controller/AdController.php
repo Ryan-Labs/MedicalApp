@@ -194,6 +194,25 @@ class AdController extends AbstractController
     }
 
     /**
+     * @Route("/{id}", name="ad_close", methods={"POST"})
+     */
+    public function close(Request $request, Ad $ad): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser()->getId() != $ad->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
+        $ad->setStatus("CLOSED");
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('ad_self');
+    }
+
+    /**
      * @Route("/{id}", name="ad_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Ad $ad): Response
