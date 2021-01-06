@@ -1,53 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ad index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adIndexStyle') }}
+{% endblock %}
 
 {% block body %}
-    <h1>Ad index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>HaveSecretariat</th>
-                <th>HomeVisit</th>
-                <th>Housing</th>
-                <th>Appointments</th>
-                <th>Software</th>
-                <th>HouseKeeping</th>
-                <th>Sector</th>
-                <th>Content</th>
-                <th>Address</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ad in ads %}
-            <tr>
-                <td>{{ ad.id }}</td>
-                <td>{{ ad.haveSecretariat ? 'Yes' : 'No' }}</td>
-                <td>{{ ad.homeVisit ? 'Yes' : 'No' }}</td>
-                <td>{{ ad.housing ? 'Yes' : 'No' }}</td>
-                <td>{{ ad.appointments }}</td>
-                <td>{{ ad.software }}</td>
-                <td>{{ ad.houseKeeping ? 'Yes' : 'No' }}</td>
-                <td>{{ ad.sector }}</td>
-                <td>{{ ad.content }}</td>
-                <td>{{ ad.address }}</td>
-                <td>{{ ad.date ? ad.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
-                    <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    <section class="ad_index__header">
+        <div class="ad_index__header__image">
+        </div>
+    </section>
     <a href="{{ path('ad_new') }}">Create new</a>
+    <div class="ad_index__content">
+        <div class="ad_index__container">
+
+            {% for ad in ads %}
+                <div class=" ad_card_custom card " >
+                    <a href="{{ path('ad_show', {'id': ad.id}) }}">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRiICWgjGSyhqA38ZpatCnopA8RlFjkQDn4w&usqp=CAU" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-title-custom">{{ ad.title }}</p>
+                            <p class="card-content-custom">{{ ad.content }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}

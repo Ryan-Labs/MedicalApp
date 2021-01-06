@@ -32,7 +32,12 @@ Encore
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
+
     .addStyleEntry('loginStyle', './assets/css/login.scss')
+
+    .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
+    .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
+
 
     //.addEntry('page1', './assets/page1.js')
     //.addEntry('page2', './assets/page2.js')
