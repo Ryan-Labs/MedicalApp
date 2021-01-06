@@ -163,9 +163,7 @@ class ResponseController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        dump("ligne 164");
         if ($this->isCsrfTokenValid('delete'.$response->getId(), $request->request->get('_token'))) {
-            dump("ligne 166");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($response);
             $entityManager->flush();
