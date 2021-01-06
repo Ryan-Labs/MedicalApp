@@ -1,0 +1,28 @@
+{% if sameUser %}
+    <div id="responsesList">
+        <h1>Responses</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Auteur</th>
+                <th>Message</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for response in responses %}
+                <tr>
+                    <td>{{ response.user.name }}</td>
+                    <td>{{ response.content }}</td>
+                    <td>{{ response.date|date("d/m/y") }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

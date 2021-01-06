@@ -38,26 +38,47 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegisterUserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-            $user->setIsEnabled(true);
-            $user->setRoles(['ROLE_USER']);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            if (!$this->mailAlreadyExist($user->getMail(), $userRepository)) {
+                $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+                $user->setIsEnabled(true);
+                $user->setRoles(['ROLE_USER']);
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('home');
+            }
+
+            $this->addFlash('danger', 'L\'adresse mail saisie correspond déjà à un compte.');
+
         }
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function mailAlreadyExist(string $mail, UserRepository $userRepository) {
+        $users = $userRepository->findBy(['mail' => $mail]);
+
+        if ($users) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -65,11 +86,17 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
-        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($authenticationUtils->getLastAuthenticationError()) {
+            $this->addFlash('danger', 'Informations d\'identification invalides.');
+        }
+
         return $this->render('security/login.html.twig', [
-            'error' => $error,
             'form' => $form->createView()
         ]);
     }
@@ -79,6 +106,10 @@ class SecurityController extends AbstractController
      */
     public function profile(Request $request, EntityManagerInterface $entityManager)
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
         $user = $this->getUser();
         $form = $this->createForm(ProfileUserType::class, $user);
         $form->handleRequest($request);
@@ -162,6 +193,10 @@ class SecurityController extends AbstractController
      */
     public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
 
@@ -217,6 +252,10 @@ class SecurityController extends AbstractController
      */
     public function resetPasswordWithToken($token, Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, MailerInterface $mailer, MailRepository $mailRepository)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(NewPasswordAfterResettingType::class);
         $form->handleRequest($request);
 
@@ -237,6 +276,8 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $url = $this->generateUrl('reset_passowrd', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
             new Mail(
                 null,
                 "appmedicalipssi@gmail.com",
@@ -244,7 +285,7 @@ class SecurityController extends AbstractController
                 null,
                 null,
                 "Mot de passe modifié avec succès",
-                "Le mot de passe vous permettant de vous connecter a été modifié récemment. Si vous êtes à l’origine de cette modification, aucune autre action n’est requise. Si vous n’avez pas effectué cette modification, veuillez réinitialiser votre mot de passe pour sécuriser votre compte.", //TODO lien vers la route reset_password
+                "Le mot de passe vous permettant de vous connecter a été modifié récemment. Si vous êtes à l’origine de cette modification, aucune autre action n’est requise. Si vous n’avez pas effectué cette modification, veuillez réinitialiser votre mot de passe pour sécuriser votre compte. Vous pouvez faire ceci depuis ce lien : " . $url,
                 $mailRepository,
                 $mailer,
                 $entityManager,

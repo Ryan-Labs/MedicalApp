@@ -13,6 +13,8 @@
     </head>
     <body>
 
+        {% include('./partials/navbar.html.twig') %}
+
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
@@ -30,8 +32,6 @@
                 {{ message }}
             </div>
         {% endfor %}
-
-        {% include('./partials/navbar.html.twig') %}
 
         {% block body %}{% endblock %}
         {% block javascripts %}

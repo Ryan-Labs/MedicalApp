@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use App\Entity\Image;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use App\Repository\ResponseRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -79,13 +80,64 @@ class AdController extends AbstractController
     }
 
     /**
+     * @Route("/self", name="ad_self", methods={"GET"})
+     */
+    public function self(AdRepository $adRepository): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('ad/self.html.twig', [
+            'ads' => $adRepository->findBy(['user' => $user], ['date' => 'DESC'])
+        ]);
+
+    }
+
+    /**
      * @Route("/{id}", name="ad_show", methods={"GET"})
      */
-    public function show(Ad $ad): Response
+    public function show(Ad $ad, ResponseRepository $responseRepository): Response
     {
+        $hasResponse = false;
+        $user = $this->getUser();
+
+        $profession = '';
+        $phoneNumber = '';
+        $mail = '';
+
+        $sameUser = false;
+
+        if ($user) {
+
+            //return if user has already response
+            $response = $responseRepository->findOneBy(['user' => $user, 'ad' => $ad], null);
+            if ($response) {
+                $hasResponse = true;
+            }
+
+            //return user entity fields
+            $profession = $user->getProfessions()[0];
+            $phoneNumber = $user->getPhoneNumber();
+            $mail = $user->getMail();
+
+            if ($user->getId() == $ad->getUser()->getId()) {
+                $sameUser = true;
+            }
+
+        }
+
+        $responses = $responseRepository->findBy(['ad' => $ad]);
+
         return $this->render('ad/show.html.twig', [
             'ad' => $ad,
+            'hasResponse' => $hasResponse,
+            'profession' => $profession,
+            'phoneNumber' => $phoneNumber,
+            'mail' => $mail,
+            'sameUser' => $sameUser,
+            'responses' => $responses,
+            'currentUser' => $user
         ]);
+
     }
 
     /**
@@ -93,6 +145,14 @@ class AdController extends AbstractController
      */
     public function edit(Request $request, Ad $ad): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser()->getId() != $ad->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
 
@@ -138,6 +198,14 @@ class AdController extends AbstractController
      */
     public function delete(Request $request, Ad $ad): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
+        if ($this->getUser()->getId() != $ad->getUser()->getId()) {
+            return $this->redirectToRoute('home');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$ad->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($ad);
