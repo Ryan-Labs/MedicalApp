@@ -8,7 +8,7 @@
     <body class="bg-default">
         <div class="main-content">
             <div class="h-75">
-                    <div class="row justify-content-center">
+                    <div class="wrap justify-content-center">
                         <div class="title-login">
                             <h1>Bienvenue!</h1>
                             <p>
@@ -20,9 +20,6 @@
                         <br>
                         <div id="wrapper">
                             {{ form_start(form) }}
-                            {% if error %}
-                                <div>{{ error.messageKey }}</div>
-                            {% endif %}
                             <div class="form-content">
                                 {{ form_row(form.mail) }}
                                 <br>
@@ -30,7 +27,6 @@
                                 <br>
                                 {{ form_row(form.submit) }}
                                 {{ form_end(form) }}
-
                             </div>
                             <br>
                             <a id="reset_password_link_login" href="{{ path('reset_passowrd') }}">Mot de passe oublié?</a>
