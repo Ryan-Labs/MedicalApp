@@ -7,6 +7,10 @@
 
     {{ include('ad/_response.html.twig') }}
 
+    {% if sameUser %}
+        {{ include('ad/_close_form.html.twig') }}
+    {% endif %}
+
     <table class="table">
         <tbody>
             <tr>
