@@ -30,6 +30,7 @@ Encore
     .addEntry('addressProvider', './assets/js/addressProvider.js')
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
+    .addStyleEntry('loginStyle', './assets/css/login.scss')
 
     //.addEntry('page1', './assets/page1.js')
     //.addEntry('page2', './assets/page2.js')
