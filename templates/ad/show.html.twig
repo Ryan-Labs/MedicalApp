@@ -2,72 +2,163 @@
 
 {% block title %}Ad{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adShowStyle') }}
+{% endblock %}
+
 {% block body %}
-    <h1>Ad</h1>
+
+
 
     {{ include('ad/_response.html.twig') }}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ad.id }}</td>
-            </tr>
-            <tr>
-                <th>Auteur</th>
-                <td>{{ ad.user.name }}</td>
-            </tr>
-            <tr>
-                <th>HaveSecretariat</th>
-                <td>{{ ad.haveSecretariat ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>HomeVisit</th>
-                <td>{{ ad.homeVisit ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Housing</th>
-                <td>{{ ad.housing ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Appointments</th>
-                <td>{{ ad.appointments }}</td>
-            </tr>
-            <tr>
-                <th>Software</th>
-                <td>{{ ad.software }}</td>
-            </tr>
-            <tr>
-                <th>HouseKeeping</th>
-                <td>{{ ad.houseKeeping ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Sector</th>
-                <td>{{ ad.sector }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ ad.content }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ ad.address }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ ad.date ? ad.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Images</th>
-                <td>
-                    {% for image in ad.images %}
-                        <img src="{{ asset('/upload/' ~ image.name) }}" alt="Image" width="150" >
-                    {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
+
+    {% if sameUser %}
+        {{ include('ad/_close_form.html.twig') }}
+    {% endif %}
+
+    <section class="ad_details_header"></section>
+
+    <section class="ad_details_section">
+        <div class="ad_details_container">
+            <div class="ad_details_left-content">
+                <h1 class="ad_details_title">{{ad.title}}</h1>
+                <p> Crée le {{ ad.date ? ad.date|date('d-m-Y H:i:s') : '' }}</p>
+                <div class="ad_details_ad-image">
+
+                    {% set index = 1 %}
+
+                    {% for image in ad.images %}
+                        {% set imageToShow = ad.images[0] %}
+
+                    {% if index == 1 %}
+                        <img src="{{ asset('/upload/' ~ imageToShow.name) }}" alt="{{  imageToShow.name }}" class="ad_details_ad-image-picture" >
+                        {% set index = index  + 1 %}
+                    {% else %}
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRiICWgjGSyhqA38ZpatCnopA8RlFjkQDn4w&usqp=CAU"  alt="default-image">
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+
+                <!-- AD CONTENT -->
+
+                <div class="ad_details_ad-content">
+                    {{ ad.content }}
+                </div>
+
+
+                <!-- IMAGES CONTENT (WIP) -->
+
+                <div class="ad_details_ad-images-container" >
+
+                    <div class="gallery-wrapper">
+
+                        {% set i = 1 %}
+
+                        {% for image in ad.images %}
+                            <div class="image-wrapper">
+                                <a href="#lightbox-image-{{ i }}">
+                                    <img src="{{ asset('/upload/' ~ image.name) }}" alt="{{  image.name }}">
+                                </a>
+                            </div>
+
+                            {% set i =  i + 1 %}
+                        {% endfor %}
+
+                        {% set i =  1 %}
+
+                    </div>
+
+                    {% set j = 1 %}
+
+                    <div class="gallery-lightboxes">
+                        {% for image in ad.images %}
+                        <div class="image-lightbox" id="lightbox-image-{{ j }}">
+                            <div class="image-lightbox-wrapper">
+                                <a href="#" class="close"></a>
+                                {%  if j > 1  %}
+                                    <a href="#lightbox-image-{{   j - 1 }}" class="arrow-left"></a>
+                                {% endif %}
+                                {% if j < ad.images|length %}
+                                    <a href="#lightbox-image-{{ j + 1 }}" class="arrow-right"></a>
+                                {% endif %}
+                                <img src="{{ asset('/upload/' ~ image.name) }}" alt="{{  image.name }}">
+                            </div>
+                        </div>
+
+                            {% set j =  j + 1 %}
+                        {% endfor %}
+
+                        {% set j = 1 %}
+
+                    </div>
+
+                </div>
+
+                <div class="ad_details_ad-features">
+
+                    <h4>Caractéristiques </h4>
+
+                    <ul>
+                        <li>  Secretariat : {{ ad.haveSecretariat ? 'Yes' : 'No' }} </li>
+                        <li>  Visite à domicile : {{ ad.homeVisit ? 'Yes' : 'No' }} </li>
+                        <li>  Housing : {{ ad.housing ? 'Yes' : 'No' }} </li>
+                        <li>  Nombre moyen de rendez-vous journaliers : {{ ad.appointments }} </li>
+                        <li>  Locigiel utilisé : {{ ad.software }} </li>
+                        <li>  HouseKeeping : {{ ad.houseKeeping ? 'Yes' : 'No' }} </li>
+                        <li>  Secteur : {{ ad.sector }} </li>
+                        <li>  Addresse :  {{ ad.address }} </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT CONTENT (WIP) -->
+
+            <div class="ad_details_right-content">
+
+
+                <div class="container">
+                    <form id="contact" action="" method="post">
+
+                        <h3>Contactez le propriétaire</h3>
+
+                        <h4>... Et il recevra imediatement votre message par e-mail ! </h4>
+
+                        <fieldset>
+                            <input placeholder="Votre prénom" type="text" tabindex="1" required autofocus>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="Votre nom" type="email" tabindex="2" required>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="Votre téléphone" type="tel" tabindex="3" required>
+                        </fieldset>
+                        <fieldset>
+                            <input placeholder="votre e-mail" type="url" tabindex="4" required>
+                        </fieldset>
+                        <fieldset>
+                            <textarea placeholder="Votre message ici" tabindex="5" required></textarea>
+                        </fieldset>
+                        <fieldset>
+                            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Envoyer votre message</button>
+                        </fieldset>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <a href="#lightbox-image-3" class="arrow-left"></a>
     <a href="{{ path('ad_index') }}">back to list</a>
 
     <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>

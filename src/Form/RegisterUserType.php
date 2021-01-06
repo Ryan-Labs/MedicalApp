@@ -42,7 +42,6 @@ class RegisterUserType extends AbstractType
             ->add('professions', EntityType::class , [
                 'class' => Profession::class,
                 'choice_label' => 'name',
-                'expanded' => true,
                 'multiple' => true
             ])
             ->add('submit', SubmitType::class)
