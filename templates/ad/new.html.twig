@@ -13,6 +13,8 @@
 
 {% block body %}
 
+    {{ include('provider.html.twig') }}
+
     {{ form_start(form, {'attr': {'id': 'regForm'}}) }}
         <h2>Créer une annonce</h2>
 

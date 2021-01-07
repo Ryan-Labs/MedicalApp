@@ -10,17 +10,17 @@ const displaySectionBtn = document.getElementById("displaySectionBtn");
 const content = document.getElementById("content");
 
 if (isGranted) {
-
     responseSection.style.display = "block";
 
-    if (!hasResponse) {
+    if (hasResponse != true) {
         displaySectionBtn.style.display = "block";
+
+        responseBody.style.display= "block";
     } else {
         alreadyResponseMsg.style.display = "block";
     }
 
 }
-
 
 global.showContent = function showContent() {
 
@@ -32,7 +32,7 @@ global.showContent = function showContent() {
 
 };
 
-global.buildResponse = function showContent(adId) {
+global.buildResponse = function buildResponse(adId) {
 
     let responseObj = {
         content: content.value,
@@ -55,7 +55,7 @@ global.buildResponse = function showContent(adId) {
             responseBody.style.display = "none";
             alreadyResponseMsg.style.display = "block";
 
-             document.location = "/ad/" + adId;
+            document.location = "/ad/" + adId;
         });
 
     }

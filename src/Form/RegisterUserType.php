@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,28 +23,43 @@ class RegisterUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
+          
+            ->add('firstName', TextType::class, array(
+                'label' => 'Prenom',
+                'attr' => array('name' => 'firstName',)
+            ))
+            ->add('lastName', TextType::class, array(
+                'label' => 'Nom',
+                'attr' => array('name' => 'lastName',)
+            ))
             ->add('salutation', ChoiceType::class,
-                [
-                    'choices' => [
-                        'Monsieur' => 'Male',
-                        'Madame' => 'Female',
-                    ],
-                    'expanded'=>true
-                ])
-            ->add('mail', EmailType::class)
+                array(
+                    'choices' => array(
+                        'Monsieur' => 'Monsieur',
+                        'Madame' => 'Madame',
+                    ),
+                    'expanded'=>true,
+                    'label' => 'Titre'
+                ))
+            ->add('mail', EmailType::class, array(
+                'label' => 'Email',
+            ))
+
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat password'),
             ))
-            ->add('phoneNumber',TelType::class, ['required' => false])
-            ->add('professions', EntityType::class , [
+            ->add('phoneNumber',TelType::class, array(
+                'label' => 'Numero de Tel.',
+                'required' => false,
+            ))
+            ->add('professions', EntityType::class ,array(
                 'class' => Profession::class,
                 'choice_label' => 'name',
                 'multiple' => true
-            ])
+            ))
+
             ->add('submit', SubmitType::class)
         ;
     }

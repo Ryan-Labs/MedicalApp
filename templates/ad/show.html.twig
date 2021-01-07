@@ -9,23 +9,22 @@
 
 {% block body %}
 
+    <section class="ad_details_header" style="text-align: right; margin: 5%">
+        {% if sameUser %}
+            {{ include('ad/_close_form.html.twig') }}
+        {% endif %}
+    </section>
 
-
-    {{ include('ad/_response.html.twig') }}
-
-
-
-    {% if sameUser %}
-        {{ include('ad/_close_form.html.twig') }}
-    {% endif %}
-
-    <section class="ad_details_header"></section>
 
     <section class="ad_details_section">
         <div class="ad_details_container">
             <div class="ad_details_left-content">
                 <h1 class="ad_details_title">{{ad.title}}</h1>
-                <p> Crée le {{ ad.date ? ad.date|date('d-m-Y H:i:s') : '' }}</p>
+
+                <h5>{% if 'ACTIVE' == ad.status %}<span class="badge badge-success">Ouverte</span>{% else %}<span class="badge badge-danger">Fermée</span>{% endif %}</h5>
+
+                {% if ad.address %}<p style="color: grey"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ ad.address }}</p>{% endif %}
+                <p> Créée le {{ ad.date ? ad.date|date('d/m/Y') : '' }}</p>
                 <div class="ad_details_ad-image">
 
                     {% set index = 1 %}
@@ -46,7 +45,7 @@
                 <!-- AD CONTENT -->
 
                 <div class="ad_details_ad-content">
-                    {{ ad.content }}
+                    {{ ad.content|raw }}
                 </div>
 
 
@@ -102,15 +101,14 @@
 
                     <h4>Caractéristiques </h4>
 
-                    <ul>
-                        <li>  Secretariat : {{ ad.haveSecretariat ? 'Yes' : 'No' }} </li>
-                        <li>  Visite à domicile : {{ ad.homeVisit ? 'Yes' : 'No' }} </li>
-                        <li>  Housing : {{ ad.housing ? 'Yes' : 'No' }} </li>
-                        <li>  Nombre moyen de rendez-vous journaliers : {{ ad.appointments }} </li>
-                        <li>  Locigiel utilisé : {{ ad.software }} </li>
-                        <li>  HouseKeeping : {{ ad.houseKeeping ? 'Yes' : 'No' }} </li>
-                        <li>  Secteur : {{ ad.sector }} </li>
-                        <li>  Addresse :  {{ ad.address }} </li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">  Secrétariat : {{ ad.haveSecretariat ? '<span class="badge badge-success">Oui</span>' : '<span class="badge badge-danger">Non</span>' }} </li>
+                        <li class="list-group-item">  Visite à domicile : {{ ad.homeVisit ? '<span class="badge badge-success">Oui</span>' : '<span class="badge badge-danger">Non</span>' }} </li>
+                        <li class="list-group-item">  Logement possible : {{ ad.housing ? '<span class="badge badge-success">Oui</span>' : '<span class="badge badge-danger">Non</span>' }} </li>
+                        <li class="list-group-item">  Nombre moyen de rendez-vous : {{ ad.appointments }} </li>
+                        <li class="list-group-item">  Logiciel utilisé : {{ ad.software }} </li>
+                        <li class="list-group-item">  Entretien ménager : {{ ad.houseKeeping ? '<span class="badge badge-success">Oui</span>' : '<span class="badge badge-danger">Non</span>' }} </li>
+                        <li class="list-group-item">  Secteur : {{ ad.sector }} </li>
                     </ul>
 
                 </div>
@@ -119,51 +117,61 @@
 
 
             <!-- RIGHT CONTENT (WIP) -->
+            {% if false == sameUser and currentUser %}
+                <input id="hasResponse" type="hidden" value="{{ hasResponse }}"/>
+                <input id="isGranted" type="hidden" value="{{ is_granted('ROLE_USER') }}"/>
 
-            <div class="ad_details_right-content">
+                <div id="responseSection" class="ad_details_right-content" style="display: none;">
+                    <h4 id="alreadyResponseMsg" style="display: none">Vous avez répondu à cette offre.</h4>
+
+                    <div id="displaySectionBtn" class="container">
 
 
-                <div class="container">
-                    <form id="contact" action="" method="post">
+                        <div id="responseBody" style="display: none">
+                            <form id="contact" action="" method="get">
+                            <h3>Contactez le propriétaire</h3>
 
-                        <h3>Contactez le propriétaire</h3>
+                            <h4>... Il sera notifié par e-mail ! </h4>
 
-                        <h4>... Et il recevra imediatement votre message par e-mail ! </h4>
+                            <fieldset>
+                                <textarea tabindex="5" cols="40" rows="13" name="content" id="content" required>Bonjour,
 
-                        <fieldset>
-                            <input placeholder="Votre prénom" type="text" tabindex="1" required autofocus>
-                        </fieldset>
-                        <fieldset>
-                            <input placeholder="Votre nom" type="email" tabindex="2" required>
-                        </fieldset>
-                        <fieldset>
-                            <input placeholder="Votre téléphone" type="tel" tabindex="3" required>
-                        </fieldset>
-                        <fieldset>
-                            <input placeholder="votre e-mail" type="url" tabindex="4" required>
-                        </fieldset>
-                        <fieldset>
-                            <textarea placeholder="Votre message ici" tabindex="5" required></textarea>
-                        </fieldset>
-                        <fieldset>
-                            <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Envoyer votre message</button>
-                        </fieldset>
+{% if profession %}Je suis {{ profession }} et je suis intéressé par votre annonce.
+    {% else %}Je suis intéressé par votre annonce.
+    {% endif %}
 
-                    </form>
+Pourrions-nous échanger à ce sujet ? Je suis joignable {% if phoneNumber %}par téléphone au {{ phoneNumber }} ou {% endif %}par e-mail : {{ mail }}.
 
+Veuillez recevoir l'expression de mes sincères salutations.
+
+{{ currentUser.name }}</textarea>
+                            </fieldset>
+                            <fieldset>
+                                <button type="button" id="contact-submit" data-submit="...Envoi en cours" onclick="buildResponse({{ ad.id }})">Envoyer la candidature</button>
+                            </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
+
+            {% endif %}
+
         </div>
 
     </section>
 
+    <div class="container-fluid" >
+        {{ include('ad/_responses.html.twig') }}
+    </div>
 
     <a href="#lightbox-image-3" class="arrow-left"></a>
-    <a href="{{ path('ad_index') }}">back to list</a>
 
-    <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
 
-    {{ include('ad/_delete_form.html.twig') }}
 
-    {{ include('ad/_responses.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('createResponse') }}
 {% endblock %}
