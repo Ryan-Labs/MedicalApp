@@ -29,12 +29,16 @@ Encore
     .addEntry('images', './assets/js/images.js')
     .addEntry('addressProvider', './assets/js/addressProvider.js')
     .addEntry('createResponse', './assets/js/createResponse.js')
+    .addEntry('searchAdIndex', './assets/js/searchAdIndex.js')
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
+    .addStyleEntry('updatePasswordStyle', './assets/css/updatePassword.scss')
     .addStyleEntry('updateMailStyle', './assets/css/updateMail.scss')
 
+
     .addStyleEntry('loginStyle', './assets/css/login.scss')
+    .addStyleEntry('resetPasswordStyle', './assets/css/resetPassword.scss')
 
     .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
     .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
@@ -80,7 +84,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

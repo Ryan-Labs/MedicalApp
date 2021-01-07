@@ -6,6 +6,7 @@ use App\Entity\Ad;
 use App\Entity\Image;
 use App\Form\AdType;
 use App\Repository\AdRepository;
+use App\Repository\ProfessionRepository;
 use App\Repository\ResponseRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,10 +23,11 @@ class AdController extends AbstractController
     /**
      * @Route("/", name="ad_index", methods={"GET"})
      */
-    public function index(AdRepository $adRepository): Response
+    public function index(AdRepository $adRepository, ProfessionRepository $professionRepository): Response
     {
         return $this->render('ad/index.html.twig', [
             'ads' => $adRepository->findAll(),
+            'professions' => $professionRepository->findAll(),
         ]);
     }
 
