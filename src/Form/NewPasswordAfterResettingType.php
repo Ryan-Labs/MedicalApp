@@ -17,11 +17,19 @@ class NewPasswordAfterResettingType extends AbstractType
         $builder
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat password')
+                'first_options' => array(
+                    'attr' => ['placeholder' => 'Nouveau mot de passe'],
+                    'label' => false,
+                ),
+                'second_options' => array(
+                    'attr' => ['placeholder' => 'Confirmation'],
+                    'label' => false,
+                ),
             ))
             ->add('token', HiddenType::class)
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Valider',
+            ))
         ;
     }
 

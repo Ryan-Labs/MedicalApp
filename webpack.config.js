@@ -41,6 +41,7 @@ Encore
     .addStyleEntry('loginStyle', './assets/css/login.scss')
     .addStyleEntry('profileStyle', './assets/css/profile.scss')
     .addStyleEntry('resetPasswordStyle', './assets/css/resetPassword.scss')
+    .addStyleEntry('resetPasswordWithTokenStyle', './assets/css/resetPasswordWithToken.scss')
     .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
     .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
 
