@@ -46,6 +46,4 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/ad/new, roles: ROLE_USER }
         - { path: ^/ad/self, roles: ROLE_USER }
-        - { path: ^/response/self, roles: ROLE_USER }
-        - { path: ^/response/new, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }

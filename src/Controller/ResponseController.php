@@ -39,6 +39,8 @@ class ResponseController extends AbstractController
      */
     public function new(Request $request): HttpResponse
     {
+        return $this->redirectToRoute('home');
+
         $response = new Response();
         $form = $this->createForm(ResponseType::class, $response);
         $form->handleRequest($request);

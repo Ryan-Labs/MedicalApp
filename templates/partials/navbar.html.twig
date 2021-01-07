@@ -1,16 +1,42 @@
-<nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar  navbar-expand-lg navbar-dark bg-dark" style="overflow: inherit">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="navbar-brand" href="{{ path('home') }}">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{{ path('ad_index') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Annonces
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{{ path('ad_index') }}">Les annonces</a>
+                <a class="dropdown-item" href="{{ path('ad_self') }}">Mes annonces</a>
+                <a class="dropdown-item" href="{{ path('response_self') }}">Mes candidatures</a>
+            </div>
+        </li>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+            <li class="nav-item navbar-middle">
+                <button type="button" class="btn btn-outline-light"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire une annonce</button>
+            </li>
+        {% endif %}
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ path('profile') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.name }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                    <a class="dropdown-item" href="{{ path('profile') }}">Mes informations</a>
+                    <a class="dropdown-item" href="{{ path('update_mail') }}">Modifier mon adresse e-mail</a>
+                    <a class="dropdown-item" href="{{ path('update_password') }}">Modifier mon mot de passe</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                </div>
             </li>
         {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('register') }}">Sign in</a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="{{ path('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Se connecter</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ path('register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> S'enregistrer</a></li>
         {% endif %}
     </ul>
 </nav>

@@ -1,0 +1,7 @@
+{% block head %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIOpIph9rbHtDruE7bc0hHN9Ze-fz7Ik4&callback=initAutocomplete&libraries=places&v=weekly" defer ></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('addressProvider') }}
+{% endblock %}
