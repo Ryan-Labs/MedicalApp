@@ -31,6 +31,7 @@ Encore
     .addEntry('createResponse', './assets/js/createResponse.js')
     .addEntry('profileJS', './assets/js/profile.js')
     .addEntry('searchAdIndex', './assets/js/searchAdIndex.js')
+    .addEntry('navbar', './assets/js/navbar.js')
 
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
@@ -43,16 +44,15 @@ Encore
     .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
     .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
 
-
-    //.addEntry('page1', './assets/page1.js')
-    //.addEntry('page2', './assets/page2.js')
-
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
+
+    // uncomment if you're having problems with a jQuery plugin
+    .autoProvidejQuery()
 
     /*
      * FEATURE CONFIG
@@ -82,9 +82,6 @@ Encore
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
-
-    // uncomment if you're having problems with a jQuery plugin
-    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

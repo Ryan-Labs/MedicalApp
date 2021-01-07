@@ -6,7 +6,6 @@ function showOnlySelectedJob() {
 
   for( let i = 0; i < inputs.length; i++ ) {
     let status = inputs[i].checked;
-    console.log(inputs[i].id);
 
     if (status == false) {
       inputs[i].style.display = "none";
