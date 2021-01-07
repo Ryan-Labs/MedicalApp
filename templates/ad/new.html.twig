@@ -9,7 +9,6 @@
 
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIOpIph9rbHtDruE7bc0hHN9Ze-fz7Ik4&callback=initAutocomplete&libraries=places&v=weekly" defer ></script>
 {% endblock %}
 
 {% block body %}
@@ -93,7 +92,6 @@
     {% block javascripts %}
         {{ parent() }}
         {{ encore_entry_script_tags('writeAd') }}
-        {{ encore_entry_script_tags('addressProvider') }}
     {% endblock %}
 
 {% endblock %}
