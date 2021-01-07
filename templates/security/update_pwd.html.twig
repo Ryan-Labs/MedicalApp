@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('updatePasswordStyle') }}
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
-    {% if error %}
-        <div>{{ error }}</div>
-    {% endif %}
-    {{ form_row(form.newPassword.first) }}
-    {{ form_row(form.newPassword.second) }}
-    {{ form_row(form.password) }}
-    {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+    <div class="main-content">
+        <div class="h-75">
+            <div class="wrap justify-content-center">
+                <div id="wrapper">
+                    {{ form_start(form) }}
+                    <div class="form-content">
+                        {{ form_row(form.password) }}
+                        <br>
+                        {{ form_row(form.newPassword.first) }}
+                        <br>
+                        {{ form_row(form.newPassword.second) }}
+                        <br>
+                        {{ form_row(form.submit) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
