@@ -16,15 +16,28 @@ class UpdatePasswordUserType extends AbstractType
     {
         $builder
             ->add('newPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat password'),
-                'mapped' => false
-            ))
+                    'type' => PasswordType::class,
+                    'first_options' => array(
+                        'attr' => ['placeholder' => 'New Password'],
+                        'label' => false,
+                    ),
+                    'second_options' => array(
+                        'attr' => ['placeholder' => 'Repeat New Password'],
+                        'label' => false,
+                    ),
+                    'mapped' => false,
+                )
+            )
             ->add('password', PasswordType::class, array(
-                'mapped' => false
-            ))
-            ->add('submit', SubmitType::class)
+                    'mapped' => false,
+                    'attr' => ['placeholder' => 'Password'],
+                    'label' => false,
+                )
+            )
+            ->add('submit', SubmitType::class, array(
+                    'label' => 'Envoyer',
+                )
+            )
         ;
     }
 
