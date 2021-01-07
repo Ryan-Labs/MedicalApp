@@ -1,12 +1,25 @@
 label, input {
   margin-right: 20px;
 }
-
-.register-form {
+input {
+  border-radius: 5px;
+  height: 30px;
+}
+html, body {
   height: 100%;
-  width: 800px;
-  margin: 200px auto;
-  border : 1px solid black;
+  margin: 0;
+}
+
+body {
+  background-color: #3ca2a8;
+}
+.register-form {
+  height: 600px;
+  width: 530px;
+  margin: 3% auto;
+  background-color: #dfdfdf;
+  border-radius: 25px;
+  border: 1px #bbbbbb;
 
   &__container {
     padding: 60px;
@@ -18,29 +31,45 @@ label, input {
     display: flex;
     flex-direction: row;
     justify-content:flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
     &__profession{
     align-items: flex-start;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
 
     &__contact{
       display: flex;
       flex-direction: row;
       justify-content:flex-start;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
 
     &__password {
       display: flex;
       flex-direction: row;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
     }
+}
 
-    &__submit {
-      text-align: center;
-    }
+#register_user_submit {
+  text-align: center;
+  background-color: #222222;
+  color: #dfdfdf;
+  margin-left: 40%;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+#firstname-div,
+#lastname-div {
+  float: left;
+}
+
+#name-div {
+  width: 100%;
+  height: auto;
+
 }
 
