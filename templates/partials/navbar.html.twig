@@ -17,7 +17,7 @@
         </li>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item navbar-middle">
-                <button type="button" class="btn btn-outline-light"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire une annonce</button>
+                <a href="{{ path('ad_new') }}" type="button" class="btn btn-outline-light"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire une annonce</a>
             </li>
         {% endif %}
     </ul>
