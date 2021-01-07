@@ -29,6 +29,7 @@ Encore
     .addEntry('images', './assets/js/images.js')
     .addEntry('addressProvider', './assets/js/addressProvider.js')
     .addEntry('createResponse', './assets/js/createResponse.js')
+    .addEntry('searchAdIndex', './assets/js/searchAdIndex.js')
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
@@ -79,7 +80,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

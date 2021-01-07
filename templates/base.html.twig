@@ -8,6 +8,7 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIOpIph9rbHtDruE7bc0hHN9Ze-fz7Ik4&callback=initAutocomplete&libraries=places&v=weekly" defer ></script>
         <script src="https://kit.fontawesome.com/91480ee909.js" crossorigin="anonymous"></script>
 
         {% block head %}{% endblock %}
@@ -38,6 +39,8 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('addressProvider') }}
         {% endblock %}
     </body>
 </html>
+

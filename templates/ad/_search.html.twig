@@ -1,0 +1,18 @@
+<div class="input-group mb-2">
+    <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" id="searchLocationBtn" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+    <input type="text" id="autocomplete" class="form-control" placeholder="Location" aria-label="" aria-describedby="basic-addon1">
+    <div class="resultField">
+        <input type="hidden" id="street_number">
+        <input type="hidden" id="route">
+        <input type="hidden" id="locality">
+        <input type="hidden" id="administrative_area_level_1">
+        <input type="hidden" id="country">
+        <input type="hidden" id="postal_code">
+    </div>
+</div>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('searchAdIndex') }}
+{% endblock %}
