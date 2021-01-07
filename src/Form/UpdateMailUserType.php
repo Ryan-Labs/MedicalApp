@@ -16,12 +16,18 @@ class UpdateMailUserType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class, array(
-                'mapped' => false
+                'mapped' => false,
+                'label' => false,
+                'attr' => ['placeholder' => 'Email'],
             ))
             ->add('password', PasswordType::class, array(
-                'mapped' => false
+                'mapped' => false,
+                'label' => false,
+                'attr' => ['placeholder' => 'Password'],
             ))
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Envoyer',
+            ))
         ;
     }
 
