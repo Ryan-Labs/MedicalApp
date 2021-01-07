@@ -20,12 +20,12 @@ class ProfileUserType extends AbstractType
     {
         $builder
             ->add('salutation', ChoiceType::class, array(
-                    'choices' => ['M.' => 'Male', 'Mme' => 'Female'],
+                    'choices' => ['M.' => 'M.', 'Mme' => 'Mme'],
                     'required' => false,
-                    'label' => "Sexe"
+                    'label' => "Titre"
             ))
             ->add('firstName', TextType::class, array(
-                'label' => 'Prenom',
+                'label' => 'Prénom',
                 'attr' => array('name' => 'firstName',)
 
             ))
@@ -35,7 +35,7 @@ class ProfileUserType extends AbstractType
 
             ))
             ->add('phoneNumber', TelType::class, array(
-                'label' => 'Numero de Tel.',
+                'label' => 'Numéro de Téléphone',
             ))
             ->add('professions', RepeatedType::class ,
                 array(
