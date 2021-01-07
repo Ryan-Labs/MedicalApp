@@ -68,3 +68,16 @@ function fixStepIndicator(n) {
 
     x[n].className += " active";
 }
+
+
+global.validation = function validation(){
+    const fileInput = document.getElementById('fileInput');
+    let value = fileInput.value;
+    const extensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    if (!extensions.exec(value)) {
+        alert('Format de fichier non valide');
+        fileInput.value = '';
+        return false;
+    }
+};
