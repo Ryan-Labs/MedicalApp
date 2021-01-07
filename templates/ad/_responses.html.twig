@@ -1,13 +1,13 @@
 {% if sameUser %}
-    <div id="responsesList">
-        <h1>Responses</h1>
+    <div id="responsesList" >
+        <h2>Candidatures reçues</h2>
 
-        <table class="table">
+        <table class="table table-striped" >
             <thead>
             <tr>
-                <th>Auteur</th>
-                <th>Message</th>
-                <th>Date</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Message</th>
+                <th scope="col">Date</th>
             </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">no records found</td>
+                    <td colspan="5">Aucune candidature pour le moment. Lorsqu'il y en aura, elles s'afficheront ici.</td>
                 </tr>
             {% endfor %}
             </tbody>
