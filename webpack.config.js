@@ -33,6 +33,7 @@ Encore
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
+    .addStyleEntry('updatePasswordStyle', './assets/css/updatePassword.scss')
 
     .addStyleEntry('loginStyle', './assets/css/login.scss')
     .addStyleEntry('resetPasswordStyle', './assets/css/resetPassword.scss')
