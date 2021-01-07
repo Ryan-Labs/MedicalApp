@@ -12,8 +12,18 @@
 
         <div class="register-form__container">
             <div class="register-form__lastname">
-                {{ form_row(form.firstName) }}
-                {{ form_row(form.lastName) }}
+                <div id="name-div">
+                    <div id="lastname-div">
+                        {{ form_label(form.lastName) }}
+                        <br>
+                        {{ form_widget(form.lastName) }}
+                    </div>
+                    <div id="firstname-div">
+                        {{ form_label(form.firstName) }}
+                        <br>
+                        {{ form_widget(form.firstName) }}
+                    </div>
+                </div>
             </div>
 
             <div class="register-form__profession">
@@ -21,17 +31,37 @@
             </div>
 
             <div class="register-form__profession">
-                {{ form_row(form.professions) }}
+                {{ form_label(form.professions) }}
+                <br>
+                {{ form_widget(form.professions) }}
             </div>
 
             <div class="register-form__contact">
-                {{ form_row(form.phoneNumber) }}
-                {{ form_row(form.mail) }}
+                <div>
+                    {{ form_label(form.phoneNumber) }}
+                    <br>
+                    {{ form_widget(form.phoneNumber) }}
+                </div>
+                <div>
+                    {{ form_label(form.mail) }}
+                    <br>
+                    {{ form_widget(form.mail) }}
+                </div>
+
             </div>
 
             <div class="register-form__password">
-                {{ form_row(form.password.first) }}
-                {{ form_row(form.password.second) }}
+                <div>
+                    {{ form_label(form.password.first) }}
+                    <br>
+                    {{ form_widget(form.password.first) }}
+                </div>
+                <div>
+                    {{ form_label(form.password.second) }}
+                    <br>
+                    {{ form_widget(form.password.second) }}
+                </div>
+
             </div>
 
             <div class="register-form__submit">
