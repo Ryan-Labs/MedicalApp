@@ -12,6 +12,17 @@
         <input type="hidden" id="postal_code">
     </div>
 </div>
+<div class="dropdown" style="display: inline-block; position: relative;">
+    <button onclick="toggleDropdown()" class="btn btn-outline-secondary">Professions <i class="fa fa-sort-desc" aria-hidden="true"></i></button>
+    <div id="dropdownSection" class="dropdown-content" style="display: none; position: absolute; overflow: auto; z-index: 1; background-color: #f6f6f6;">
+        <input type="text" class="form-control" placeholder="Rechercher.." id="searchProfession" onkeyup="filterFunction()">
+        {% for profession in professions %}
+            <p class="dropdown-item">{{ profession.name }}</p>
+        {% endfor %}
+    </div>
+    <div id="btnFilter">
+    </div>
+</div>
 
 {% block javascripts %}
     {{ encore_entry_script_tags('searchAdIndex') }}

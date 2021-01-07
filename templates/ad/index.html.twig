@@ -48,6 +48,8 @@
                     <input type="hidden" class="searchField" id="administrative_area_level_1ad" value="{{ ad.administrativeAreaLevel1 }}">
                     <input type="hidden" class="searchField" id="countryad" value="{{ ad.country }}">
                     <input type="hidden" class="searchField" id="postal_codead" value="{{ ad.postalCode }}">
+
+                    <input type="hidden" class="professionField" value="{{ ad.profession.name }}">
                 </div>
             {% endfor %}
         </div>
