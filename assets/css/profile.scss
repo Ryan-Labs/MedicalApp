@@ -1,0 +1,49 @@
+@import "~bootstrap/scss/bootstrap";
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #3ca2a8;
+}
+
+.main-content {
+  min-height: 90vh;
+  margin: 0;
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#wrapper {
+  min-height: 650px;
+  min-width: 500px;
+  background-color: #dfdfdf;
+  border-radius: 25px;
+  border: 1px #bbbbbb;
+  margin-top: 2%;
+}
+
+.form-content {
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+#profile_user_salutation,
+#profile_user_firstName,
+#profile_user_lastName,
+#profile_user_phoneNumber{
+  border-radius: 5px;
+  height: 30px;
+}
+
+#profile_user_submit {
+  background-color: #222222;
+  color: #dfdfdf;
+  margin-left: 40%;
+  border-radius: 5px;
+}
