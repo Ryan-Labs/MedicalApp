@@ -23,6 +23,7 @@ class RegisterUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+          
             ->add('firstName', TextType::class, array(
                 'label' => 'Prenom',
                 'attr' => array('name' => 'firstName',)
@@ -34,8 +35,8 @@ class RegisterUserType extends AbstractType
             ->add('salutation', ChoiceType::class,
                 array(
                     'choices' => array(
-                        'Monsieur' => 'Male',
-                        'Madame' => 'Female',
+                        'Monsieur' => 'Monsieur',
+                        'Madame' => 'Madame',
                     ),
                     'expanded'=>true,
                     'label' => 'Titre'
@@ -43,6 +44,7 @@ class RegisterUserType extends AbstractType
             ->add('mail', EmailType::class, array(
                 'label' => 'Email',
             ))
+
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array('label' => 'Password'),
