@@ -26,8 +26,6 @@ function addLineBreak(idHTML) {
 
 showOnlySelectedJob();
 addLineBreak("profile_user_salutation");
-addLineBreak("profile_user_firstName");
-addLineBreak("profile_user_lastName");
 addLineBreak("profile_user_phoneNumber");
 addLineBreak("profile_user_professions_second");
 

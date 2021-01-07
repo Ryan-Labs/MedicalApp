@@ -22,7 +22,7 @@ class ProfileUserType extends AbstractType
             ->add('salutation', ChoiceType::class, array(
                     'choices' => ['M.' => 'Male', 'Mme' => 'Female'],
                     'required' => false,
-                    'label' => "Sex"
+                    'label' => "Sexe"
             ))
             ->add('firstName', TextType::class, array(
                 'label' => 'Prenom',

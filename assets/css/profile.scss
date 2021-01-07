@@ -20,7 +20,7 @@ body {
 }
 
 #wrapper {
-  min-height: 650px;
+  min-height: 550px;
   min-width: 500px;
   background-color: #dfdfdf;
   border-radius: 25px;
@@ -46,4 +46,19 @@ body {
   color: #dfdfdf;
   margin-left: 40%;
   border-radius: 5px;
+}
+
+#firstname-div {
+  float: right;
+  margin-right: 10% ;
+}
+
+#lastname-div {
+  float: left;
+}
+
+#name-div {
+  width: 100%;
+  height: auto;
+  margin-bottom: 60px;
 }

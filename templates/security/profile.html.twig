@@ -17,9 +17,17 @@
                             <div>
                                 {{ form_row(form.salutation) }}
                                 <br>
-                                <div>
-                                    {{ form_row(form.firstName) }}
-                                    {{ form_row(form.lastName) }}
+                                <div id="name-div">
+                                    <div id="lastname-div">
+                                        {{ form_label(form.lastName) }}
+                                        <br>
+                                        {{ form_widget(form.lastName) }}
+                                    </div>
+                                    <div id="firstname-div">
+                                        {{ form_label(form.firstName) }}
+                                        <br>
+                                        {{ form_widget(form.firstName) }}
+                                    </div>
                                 </div>
 
                                 <br>
