@@ -3,37 +3,37 @@
 {% block title %}My ads{% endblock %}
 
 {% block body %}
-    <h1>My ads</h1>
+    <div class="container-fluid" style="margin-top: 2%">
+        <h2>Mes annonces</h2>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Responses</th>
-            <th>Status</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ad in ads %}
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>{{ ad.title }}</td>
-                <td>{{ ad.date|date('d/m/Y') }}</td>
-                <td>{{ ad.responses|length }}</td>
-                <td>{{ ad.status == "ACTIVE" ? "Ouvert" : "Fermé" }}</td>
-                <td>
-                    <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
-                    <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
-                </td>
+                <th scope="col">Titre</th>
+                <th scope="col">Date</th>
+                <th scope="col">Candidatures</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Action</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="13">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('ad_new') }}">Create new</a>
+            </thead>
+            <tbody>
+            {% for ad in ads %}
+                <tr>
+                    <td>{{ ad.title }}</td>
+                    <td>{{ ad.date|date('d/m/Y') }}</td>
+                    <td>{{ ad.responses|length }}</td>
+                    <td>{% if 'ACTIVE' == ad.status %}<span class="badge badge-success">Ouverte</span>{% else %}<span class="badge badge-danger">Fermée</span>{% endif %}</td>
+                    <td>
+                        <a href="{{ path('ad_show', {'id': ad.id}) }}"><button class="btn btn-outline-primary"><i class="fas fa-eye"></i></button></a>
+                        <a href="{{ path('ad_edit', {'id': ad.id}) }}"><button class="btn btn-outline-primary"><i class="fas fa-edit"></i></button></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="13">Aucune annonce pour le moment. Lorsqu'il y en aura, elles s'afficheront ici.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
