@@ -22,7 +22,7 @@ services:
       - ./docker/mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: medicalApp
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: EcIihAp1gQ
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,5 +31,5 @@ services:
     ports:
       - 8080:80
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: EcIihAp1gQ
       PMA_HOST: database
