@@ -18,16 +18,18 @@ class LoginUserType extends AbstractType
             ->add('mail', EmailType::class, array(
                 'label' => false,
                 'attr'=> array(
-                    'placeholder' => 'Mail')
+                    'placeholder' => 'Email')
                 )
             )
             ->add('password', PasswordType::class, array(
                 'label' => false,
                 'attr'=> array(
-                    'placeholder' => 'Password')
+                    'placeholder' => 'Mot de passe')
                 )
             )
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Connexion'
+            ))
         ;
     }
 

@@ -110,6 +110,10 @@ class ResponseController extends AbstractController
      */
     public function self(ResponseRepository $responseRepository): HttpResponse
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('login');
+        }
+
         $user = $this->getUser();
 
         return $this->render('response/self.html.twig', [

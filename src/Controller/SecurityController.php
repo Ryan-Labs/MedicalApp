@@ -60,7 +60,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('login');
             }
 
             $this->addFlash('danger', 'L\'adresse mail saisie correspond déjà à un compte.');

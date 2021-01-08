@@ -25,7 +25,7 @@ class RegisterUserType extends AbstractType
         $builder
           
             ->add('firstName', TextType::class, array(
-                'label' => 'Prenom',
+                'label' => 'Prénom',
                 'attr' => array('name' => 'firstName',)
             ))
             ->add('lastName', TextType::class, array(
@@ -35,8 +35,8 @@ class RegisterUserType extends AbstractType
             ->add('salutation', ChoiceType::class,
                 array(
                     'choices' => array(
-                        'Monsieur' => 'Monsieur',
-                        'Madame' => 'Madame',
+                        'Monsieur' => 'M.',
+                        'Madame' => 'Mme',
                     ),
                     'expanded'=>true,
                     'label' => 'Titre'
@@ -47,11 +47,11 @@ class RegisterUserType extends AbstractType
 
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat password'),
+                'first_options' => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Confirmer'),
             ))
             ->add('phoneNumber',TelType::class, array(
-                'label' => 'Numero de Tel.',
+                'label' => 'Numéro de téléphone',
                 'required' => false,
             ))
             ->add('professions', EntityType::class ,array(
@@ -60,7 +60,9 @@ class RegisterUserType extends AbstractType
                 'multiple' => true
             ))
 
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, array(
+                'label' => 'S\'inscrire'
+            ))
         ;
     }
 

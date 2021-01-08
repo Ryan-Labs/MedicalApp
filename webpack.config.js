@@ -31,8 +31,6 @@ Encore
     .addEntry('createResponse', './assets/js/createResponse.js')
     .addEntry('profileJS', './assets/js/profile.js')
     .addEntry('searchAdIndex', './assets/js/searchAdIndex.js')
-    .addEntry('navbar', './assets/js/navbar.js')
-
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')

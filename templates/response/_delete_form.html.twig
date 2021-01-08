@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('response_delete', {'id': response.id}) }}" onsubmit="return confirm('Voulez-vous annuler votre candidature ?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ response.id) }}">
-    <button class="btn">Delete</button>
+    <button class="btn btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i> </button>
 </form>
