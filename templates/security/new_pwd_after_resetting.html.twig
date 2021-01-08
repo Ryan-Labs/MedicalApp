@@ -1,10 +1,26 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('resetPasswordWithTokenStyle') }}
+{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
-    {{ form_row(form.token) }}
-    {{ form_row(form.submit) }}
-    {{ form_end(form) }}
+    <div class="main-content">
+        <div class="h-75">
+            <div class="wrap justify-content-center">
+                <div id="wrapper">
+                    {{ form_start(form) }}
+                        <div class="form-content">
+                            {{ form_row(form.password.first) }}
+                            <br>
+                            {{ form_row(form.password.second) }}
+                            <br>
+                            {{ form_row(form.token) }}
+                            {{ form_row(form.submit) }}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

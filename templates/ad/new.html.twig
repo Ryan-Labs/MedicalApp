@@ -71,12 +71,12 @@
             {{ form_widget(form.content, { 'id': 'ad-content', 'attr': {'oninput': 'this.className = ""', 'placeholder': 'Description de l\'annonce'}, 'required': 'true' }) }}
 
             Photos:
-            {{ form_widget(form.images, { 'attr': {'oninput': 'this.className = ""'} }) }}
+            {{ form_widget(form.images, { 'id': 'fileInput', 'attr': {'oninput': 'this.className = ""', 'onchange': 'validation()'} }) }}
         </div>
         <div style="overflow:auto;">
             <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Précédent</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Suivant</button>
+                <button class="btn btn-outline-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)">Précédent</button>
+                <button class="btn btn-outline-success" type="button" id="nextBtn" onclick="nextPrev(1)">Suivant</button>
             </div>
         </div>
         <!-- Circles which indicates the steps of the form: -->

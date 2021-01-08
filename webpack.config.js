@@ -31,8 +31,6 @@ Encore
     .addEntry('createResponse', './assets/js/createResponse.js')
     .addEntry('profileJS', './assets/js/profile.js')
     .addEntry('searchAdIndex', './assets/js/searchAdIndex.js')
-    .addEntry('navbar', './assets/js/navbar.js')
-
 
     .addStyleEntry('writeAdStyle', './assets/css/writeAd.css')
     .addStyleEntry('registerStyle', './assets/css/register.scss')
@@ -41,8 +39,10 @@ Encore
     .addStyleEntry('loginStyle', './assets/css/login.scss')
     .addStyleEntry('profileStyle', './assets/css/profile.scss')
     .addStyleEntry('resetPasswordStyle', './assets/css/resetPassword.scss')
+    .addStyleEntry('resetPasswordWithTokenStyle', './assets/css/resetPasswordWithToken.scss')
     .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
     .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
+    .addStyleEntry('homePageStyle', './assets/css/homePage.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

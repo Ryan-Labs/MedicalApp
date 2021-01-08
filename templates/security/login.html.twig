@@ -20,13 +20,16 @@
                         <br>
                         <div id="wrapper">
                             {{ form_start(form) }}
-                            <div class="form-content">
+                            <div class="form-content" style="margin-top: 10%">
                                 {{ form_row(form.mail) }}
                                 <br>
                                 {{ form_row(form.password) }}
                                 <br>
-                                {{ form_row(form.submit) }}
+                                <div style="margin-right: 60%">
+                                    {{ form_row(form.submit) }}
+                                </div>
                                 {{ form_end(form) }}
+
                             </div>
                             <br>
                             <a id="reset_password_link_login" href="{{ path('reset_passowrd') }}">Mot de passe oublié?</a>
