@@ -1,5 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('homePageStyle') }}
+{% endblock %}
+
 {% block body %}
-    HomePage
+    <h1 class="home-title"> Bienvenue sur Medic-ads</h1>
+    <div id="wrapper">
+        <p class="home-text-about-us-one">
+            Notre site internet Medic-ads est un réseau d’entraide destiné aux professionnels de santé. <br>
+            Si vous exercez en libéral, recherchez pour votre propre compte ou celui d’un tiers, vous pouvez consulter et publier des annonces.<br>
+            Les annonces sont gratuites, et concernent des types variés :<br>
+        <p>
+            <div id="list-type-annonce">
+                - Remplacement<br>
+                - Offre d’emploi<br>
+                - Cession d’activité<br>
+                - Collaboration libérale<br>
+                - Cessation de patientèle<br>
+                - Et bien d'autres
+            </div>
+        <p class="home-text-about-us-deux">
+            Les annonces peuvent faire l’objet de candidature, qui génèrera une notification à la personne concernée.
+        </p>
+    </div>
+
 {% endblock %}

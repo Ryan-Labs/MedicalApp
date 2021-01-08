@@ -43,6 +43,7 @@ Encore
     .addStyleEntry('resetPasswordStyle', './assets/css/resetPassword.scss')
     .addStyleEntry('adIndexStyle', './assets/css/adIndex.scss')
     .addStyleEntry('adShowStyle', './assets/css/adShow.scss')
+    .addStyleEntry('homePageStyle', './assets/css/homePage.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
