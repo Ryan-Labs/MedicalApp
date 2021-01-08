@@ -4,6 +4,16 @@
     {{ parent() }}
     {{ encore_entry_link_tags('homePageStyle') }}
 {% endblock %}
+{% block head %}
+    <meta name="robots" content="index">
+    <meta name="title" content="Medic-ads — Remplacement, Offre d’emploi et Collaboration libérale">
+    <meta name="description" content="Medic-ads, un réseau d’entraide destiné aux professionnels de santé. Des annonces gratuites,  et concernant des types variés.">
+    <meta name="subject" content="Annonces médicales">
+    <meta name="keywords" content="santé, annonces, médicales, praticien, libéral"/>
+    <meta name="Revisit-After" content="15 days">
+    <meta name="Distribution" content="global">
+    <meta name="Content-Language" content="fr">
+{% endblock %}
 
 {% block body %}
     <h1 class="home-title"> Bienvenue sur Medic-ads</h1>
